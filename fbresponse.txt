@@ -1,0 +1,2913 @@
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663989,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7689882461048758",
+                            "name": "Agnes Nyanchama"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719663987,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664183,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7978107062212414",
+                            "name": "Mylerc Natasha Daves"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719664180,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664185,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7813318238745162",
+                            "name": "Tiano Worrgz"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_505388055175793",
+                        "created_time": 1719664179,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664189,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_505388055175793",
+                        "created_time": 1719664187,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662361,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8651253874890984",
+                            "name": "Marie Darlia"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1171789180619014",
+                        "created_time": 1719662360,
+                        "item": "reaction",
+                        "parent_id": "122103808370367447_1163674121421982",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664266,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7696676007082617",
+                            "name": "Susan Wanjiku"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719664264,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662686,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8171432656278840",
+                            "name": "Njoroge Derby"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719662685,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664618,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8064855136890628",
+                            "name": "Jace Angela"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719664616,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662743,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7860706920641534",
+                            "name": "Mercy Mwatari"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719662740,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664650,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7675695379144843",
+                            "name": "Joyleen Wairimu"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_7198237780281587",
+                        "created_time": 1719664649,
+                        "item": "reaction",
+                        "parent_id": "122103808370367447_999763224843207",
+                        "reaction_type": "haha",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662847,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid02cMakTsBx39iiyGenJWGKkD3KD1FPkQvvjv7u5RE1gGXaSZTr71vUBjCj44FLbtSml&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_742280117885537",
+                        "created_time": 1719662840,
+                        "item": "comment",
+                        "parent_id": "122103808370367447_1850455602131698",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719664810,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25849716814675076",
+                            "name": "Merry Kimz"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719664808,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662990,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7612177322164087",
+                            "name": "Daisy Shazzie"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719662986,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719662957,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8106912379430354",
+                            "name": "Ann Kamande"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Price, and side effects please",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_2227654554253247",
+                        "created_time": 1719662955,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663063,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7848223131887814",
+                            "name": "Rhodez Rhodez"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719663061,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663333,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Price, and side effects please",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_2227654554253247",
+                        "created_time": 1719663331,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663391,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8361994237161980",
+                            "name": "Chelimo Kosgey"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid02cMakTsBx39iiyGenJWGKkD3KD1FPkQvvjv7u5RE1gGXaSZTr71vUBjCj44FLbtSml",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Can I find in eldoret urgently",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "25733382396310036_1017896469796078",
+                        "created_time": 1719663387,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665286,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Can I find in eldoret urgently",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "25733382396310036_1017896469796078",
+                        "created_time": 1719665285,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665291,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7542998752435362",
+                            "name": "Josphine Nyamu"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719665288,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665348,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25864100326567273",
+                            "name": "Nancy Kwamboka"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719665344,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663560,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7726410847471620",
+                            "name": "Caren Langat"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid02cMakTsBx39iiyGenJWGKkD3KD1FPkQvvjv7u5RE1gGXaSZTr71vUBjCj44FLbtSml",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Kwani kuna watu wanataka kureduce weight this much\ud83e\udd14n the way I don't like slimming",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_2137459839955485",
+                        "created_time": 1719663555,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665463,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Kwani kuna watu wanataka kureduce weight this much\ud83e\udd14n the way I don't like slimming",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_2137459839955485",
+                        "created_time": 1719665462,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665576,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "26410449838600190",
+                            "name": "Steve N Olima"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719665573,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660103,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "6952984961471152",
+                            "name": "Janet Makori"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719660101,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660105,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "6952984961471152",
+                            "name": "Janet Makori"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719660104,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "remove"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660278,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7608281939284624",
+                            "name": "Dorcas Ndungu"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719660276,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719663877,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7143336585766169",
+                            "name": "Jackline Gatwiri"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719663876,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660366,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "26023537627260643",
+                            "name": "Dolly Ogweno"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid02cMakTsBx39iiyGenJWGKkD3KD1FPkQvvjv7u5RE1gGXaSZTr71vUBjCj44FLbtSml",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1850455602131698",
+                        "created_time": 1719660362,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665892,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1850455602131698",
+                        "created_time": 1719665891,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719665967,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7650663338362603",
+                            "name": "Njoki Herny"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719665964,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660537,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7806931926053901",
+                            "name": "Gladys Njue"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719660535,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660509,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "26262299723355306",
+                            "name": "Brenda Natasha"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "How much and how can I get it",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_961581198983067",
+                        "created_time": 1719660504,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719660584,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8000719483325171",
+                            "name": "Damaris Rime"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719660581,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661235,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8662763370419045",
+                            "name": "Chemu Carole"
+                        },
+                        "post_id": "370668499452006_122099077736367447",
+                        "created_time": 1719661233,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122099077736367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719666739,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7804245166303919",
+                            "name": "Janet Moraa"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719666736,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661441,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Mwanaidi Msanifu Kombo Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "26117096267904290_1206011790572133",
+                        "created_time": 1719661434,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_425007820526154",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661449,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Damaris Mwende Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "26117096267904290_1596308027586206",
+                        "created_time": 1719661443,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_441465478778353",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661477,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_1444011642914082",
+                        "created_time": 1719661472,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_961581198983067",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661487,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Onywoki Carol Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_1226816191810777",
+                        "created_time": 1719661481,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_3682601908677244",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661494,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Betine Achieng Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_802559265337708",
+                        "created_time": 1719661488,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_1144727089917016",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661505,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Winnie Jennifer Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_1005973957848233",
+                        "created_time": 1719661499,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_1550051258911575",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661518,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-15T16:44:41+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0uViubySYR7hMAnnjmwzHdP3o4vVQZb7jcKXJnBZgbHkt8tmZTK59aSB6xBER6LkVl&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122099077736367447"
+                        },
+                        "message": "Jane Kamau Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122099077736367447",
+                        "comment_id": "8310798412277038_3402028853430674",
+                        "created_time": 1719661511,
+                        "item": "comment",
+                        "parent_id": "122099077736367447_877451614422323",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661538,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719661537,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "love",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661551,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8083745575072564",
+                            "name": "Njoki Bee"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_7198237780281587",
+                        "created_time": 1719661548,
+                        "item": "reaction",
+                        "parent_id": "122103808370367447_999763224843207",
+                        "reaction_type": "haha",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667065,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7817926294954565",
+                            "name": "Tabitha Muchiri"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Hello ni how much..,?",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_451339060996780",
+                        "created_time": 1719667061,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667068,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Hello ni how much..,?",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_451339060996780",
+                        "created_time": 1719667066,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667145,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7817926294954565",
+                            "name": "Tabitha Muchiri"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Can we talk through what's up..., for those who don't know how to use the website",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_568154255774237",
+                        "created_time": 1719667142,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661672,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25919336554347370",
+                            "name": "Nelios Njesh"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719661669,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667181,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7817926294954565",
+                            "name": "Tabitha Muchiri"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "0715760909",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_2742933249209227",
+                        "created_time": 1719667178,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667309,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7932499943462749",
+                            "name": "Leah Muthoni"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719667305,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719661836,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7970781519639778",
+                            "name": "Herlymor Dheq"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719661834,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667530,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7903199203074345",
+                            "name": "Jody Jody"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719667528,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667650,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8121694021221438",
+                            "name": "Felister Thuo"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719667647,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667781,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7596956233756516",
+                            "name": "Orago Nancy"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "6019915021466121_3177489715719073",
+                        "created_time": 1719667778,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "remove"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667794,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7692642447519894",
+                            "name": "Agnes Rotich"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1171789180619014",
+                        "created_time": 1719667794,
+                        "item": "reaction",
+                        "parent_id": "122103808370367447_1163674121421982",
+                        "reaction_type": "haha",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719667914,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7802643849783243",
+                            "name": "Mercy Nyambura"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719667911,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719668113,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7836979079681018",
+                            "name": "Christine Oloo"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719668110,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719668409,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7970065639755061",
+                            "name": "Susan Mati"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719668407,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719668658,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7877535902325905",
+                            "name": "Issa Mercury"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719668656,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719668702,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7996974893674331",
+                            "name": "Dayana Inganga"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719668699,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719668719,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7624948424285885",
+                            "name": "Edna Nyaboke"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719668716,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669148,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "6481875485270589",
+                            "name": "Hope Shee"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719669146,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669238,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25949313558049207",
+                            "name": "Judith Musyoka"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719669236,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669419,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7748810321873147",
+                            "name": "Shi Ro"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "from Dr who?",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1599427327594902",
+                        "created_time": 1719669416,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669421,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "from Dr who?",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1599427327594902",
+                        "created_time": 1719669420,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669436,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8036766959718477",
+                            "name": "Sharon Wambua"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719669434,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669604,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8036766959718477",
+                            "name": "Sharon Wambua"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Nataka ya kunona nifanane wa kwanza",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1240494136972063",
+                        "created_time": 1719669599,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669606,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Nataka ya kunona nifanane wa kwanza",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1240494136972063",
+                        "created_time": 1719669605,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719669805,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7414199408703262",
+                            "name": "Belinda Aomo"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719669801,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719670689,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8030903266960788",
+                            "name": "Caterine Knight"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719670686,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719670883,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "26068227306124568",
+                            "name": "Moureen Magut"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Hay",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "6019915021466121_1025011769060458",
+                        "created_time": 1719670880,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719670886,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Hay",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "6019915021466121_1025011769060458",
+                        "created_time": 1719670884,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719671425,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7779351082133600",
+                            "name": "Agnes Msoo"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Sikunona ya ukweri uogo tupu",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "25733382396310036_505833128465959",
+                        "created_time": 1719671422,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719671506,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7310229275748917",
+                            "name": "Jane Nzilani Maangi"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719671503,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "love",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719671739,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7729685040445080",
+                            "name": "Carolina Herrera"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719671735,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672024,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25689334937380990",
+                            "name": "Anne Laurah"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719672022,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672035,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "25689334937380990",
+                            "name": "Anne Laurah"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_391409873921067",
+                        "created_time": 1719672032,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672037,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_391409873921067",
+                        "created_time": 1719672036,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672873,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "0715760909",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_2742933249209227",
+                        "created_time": 1719672870,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672872,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Can we talk through what's up..., for those who don't know how to use the website",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_568154255774237",
+                        "created_time": 1719672869,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672905,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_391409873921067",
+                        "created_time": 1719672903,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "unhide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672908,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Interested",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_391409873921067",
+                        "created_time": 1719672906,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719672938,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/permalink.php?story_fbid=pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol&id=61561023413384",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "Anne Laurah Hello, please click the link below and visit our website. There you'll find the price and all the required info. Then fill the form, leave your name and phone number. Our manager will call you back and tell everything you need to know! https:\/\/idealica.beauty?ad=comm",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_456571630455040",
+                        "created_time": 1719672925,
+                        "item": "comment",
+                        "parent_id": "122103808370367447_391409873921067",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719673248,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7862123260575321",
+                            "name": "Vibian Rutto"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "For belly",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_488772850217715",
+                        "created_time": 1719673245,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719673251,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "For belly",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_488772850217715",
+                        "created_time": 1719673250,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719673596,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7723310491116813",
+                            "name": "Missy George"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719673593,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719673720,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7728717720546169",
+                            "name": "Edwinah Nyaoke"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719673718,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674043,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7768570886595872",
+                            "name": "Mary Gachii"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719674040,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674247,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7959640144056772",
+                            "name": "Beryl Esther"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "How much",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "6019915021466121_1474320276556041",
+                        "created_time": 1719674242,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674254,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "How much",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "6019915021466121_1474320276556041",
+                        "created_time": 1719674253,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674389,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8655717547776337",
+                            "name": "June Maitha"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/pfbid0YowZYhZbBmaSJdzwUxJDZNDixgtu1KuvaDkGnMwBPFFRyAiu2P5dRBfRyV9BM8Aol",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "B4 looks  good than the current.",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1311963586428983",
+                        "created_time": 1719674386,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: {"success":true}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674393,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "370668499452006",
+                            "name": "Get Slim"
+                        },
+                        "post": {
+                            "status_type": "shared_story",
+                            "is_published": false,
+                            "updated_time": "2024-06-24T05:38:09+0000",
+                            "permalink_url": "https:\/\/www.facebook.com\/122109434180367447\/posts\/122103808370367447",
+                            "promotion_status": "ineligible",
+                            "id": "370668499452006_122103808370367447"
+                        },
+                        "message": "B4 looks  good than the current.",
+                        "post_id": "370668499452006_122103808370367447",
+                        "comment_id": "8562032040480804_1311963586428983",
+                        "created_time": 1719674392,
+                        "item": "comment",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "verb": "hide"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+Hide Comment Response: 
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674536,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "8046177492094827",
+                            "name": "Ireen Kendi"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719674532,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674789,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7624365114327333",
+                            "name": "Melloline Nyanchama"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719674785,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}
+FB Request: {
+    "entry": [
+        {
+            "id": "370668499452006",
+            "time": 1719674871,
+            "changes": [
+                {
+                    "value": {
+                        "from": {
+                            "id": "7707168882700288",
+                            "name": "Aisha Mpenda Amani"
+                        },
+                        "post_id": "370668499452006_122103808370367447",
+                        "created_time": 1719674868,
+                        "item": "reaction",
+                        "parent_id": "370668499452006_122103808370367447",
+                        "reaction_type": "like",
+                        "verb": "add"
+                    },
+                    "field": "feed"
+                }
+            ]
+        }
+    ],
+    "object": "page"
+}

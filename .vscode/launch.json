@@ -1,0 +1,44 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch PHP Server & Debug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "runtimeExecutable": "php",
+            "runtimeArgs": [
+                "-S",
+                "localhost:8080",
+                "-t",
+                "."
+            ],
+        },
+        {
+            "name": "Launch Firefox (Admin)",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:8080/admin/",
+            "webRoot": "${workspaceFolder}/admin/",
+            "pathMappings": [
+                {
+                    "url": "http://localhost:8080",
+                    "path": "${workspaceFolder}"
+                }
+            ],
+            "reAttach": true,
+            "skipFiles": [
+                "${workspaceFolder}/node_modules/**"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Debug Session",
+            "configurations": [
+                "Launch PHP Server & Debug",
+                "Launch Firefox (Admin)"
+            ]
+        }
+    ]
+}
