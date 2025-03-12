@@ -14,7 +14,7 @@ class FacebookAPI {
         $response = json_decode($this->make_curl_request($url), true);
         
         if (!$response || !isset($response['success'])) {
-            CommentsLogger::log("Failed to subscribe to page feed: " . json_encode($response), 'Error', true, Settings::$debug);
+            CommentsLogger::log("Failed to subscribe to page feed: " . json_encode($response), 'Error', true);
             return false;
         }
         
@@ -55,11 +55,11 @@ class FacebookAPI {
                     // Attach the uploaded photo to the comment
                     $data['attachment_id'] = $photoResponse['id'];
                 } else {
-                    CommentsLogger::log("Failed to upload photo: " . json_encode($photoResponse), 'Error', true, Settings::$debug);
+                    CommentsLogger::log("Failed to upload photo: " . json_encode($photoResponse), 'Error', true);
                     return false;
                 }
             } else {
-                CommentsLogger::log("Image file not found: $fullPath", 'Error', true, Settings::$debug);
+                CommentsLogger::log("Image file not found: $fullPath", 'Error', true);
                 return false;
             }
         }
@@ -92,7 +92,7 @@ class FacebookAPI {
             $error_msg = curl_error($ch);
             unset($data['access_token']);
             $json_data = json_encode($data);
-            CommentsLogger::log("Error sending $json_data to url: $url $error_msg", 'Error', true, Settings::$debug);
+            CommentsLogger::log("Error sending $json_data to url: $url $error_msg", 'Error', true);
         }
         curl_close($ch);
         return $response;

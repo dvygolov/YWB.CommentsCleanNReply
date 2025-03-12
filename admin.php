@@ -2,7 +2,8 @@
 session_start();
 require_once __DIR__ . '/settings.php';
 require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/facebook.php'; // Include the FacebookAPI class
+require_once __DIR__ . '/facebook.php';
+require_once __DIR__ . '/logger.php'; 
 
 // Check if not logged in
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
@@ -17,12 +18,14 @@ $error = '';
 // Handle file upload
 function handleImageUpload($file) {
     if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
+        CommentsLogger::log("No file uploaded or empty file", 'Warning');
         return null;
     }
 
     // Validate file type
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!in_array($file['type'], $allowedTypes)) {
+        CommentsLogger::log("Invalid file type: " . $file['type'], 'Error');
         return false;
     }
 
@@ -33,8 +36,10 @@ function handleImageUpload($file) {
 
     // Move uploaded file
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+        CommentsLogger::log("File successfully uploaded to: " . $uploadPath, 'Info');
         return $filename;
     }
+    CommentsLogger::log("Failed to move uploaded file to: " . $uploadPath, 'Error');
     return false;
 }
 
@@ -86,20 +91,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         
-        if (!isset($error)) {
+        if (empty($error)) {
             if ($db->addReplyRule($pageId, $triggerWords, $replyText, $imagePath)) {
                 $message = 'Reply rule added successfully';
             } else {
                 $error = 'Failed to add reply rule';
             }
         }
-    } elseif (isset($_POST['remove_rule'])) {
+    } elseif (isset($_POST['action']) && $_POST['action'] === 'remove_rule') {
         if ($db->removeReplyRule($_POST['rule_id'])) {
             $message = 'Reply rule removed successfully';
         } else {
             $error = 'Failed to remove reply rule';
         }
-    } elseif (isset($_POST['update_rule'])) {
+    } elseif (isset($_POST['action']) && $_POST['action'] === 'update_rule') {
         $ruleId = $_POST['rule_id'];
         $triggerWords = $_POST['trigger_words'];
         $replyText = $_POST['reply_text'];
@@ -110,22 +115,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newImage = handleImageUpload($_FILES['reply_image']);
             if ($newImage === false) {
                 $error = "Invalid image file. Please upload JPG, PNG or GIF.";
+                CommentsLogger::log("Failed to upload image: " . print_r($_FILES['reply_image'], true), 'Error');
             } else {
                 // Delete old image if exists
                 if (!empty($imagePath)) {
-                    @unlink(__DIR__ . '/uploads/' . $imagePath);
+                    if (!@unlink(__DIR__ . '/uploads/' . $imagePath)) {
+                        CommentsLogger::log("Failed to delete old image: " . $imagePath, 'Warning');
+                    }
                 }
                 $imagePath = $newImage;
+                CommentsLogger::log("New image path set to: " . $newImage, 'Info');
             }
         }
         
         if (empty($error)) {
-            if ($db->updateReplyRule(
-                $ruleId, $triggerWords, $replyText, $imagePath
-            )) {
+            $ruleUpdated = $db->updateReplyRule($ruleId, $triggerWords, $replyText, $imagePath);
+            if ($ruleUpdated) {
                 $message = 'Reply rule updated successfully';
+                CommentsLogger::log("Rule $ruleId updated with image: $imagePath", 'Info');
             } else {
                 $error = 'Failed to update reply rule';
+                CommentsLogger::log("Failed to update rule $ruleId in database", 'Error');
             }
         }
     }
@@ -286,7 +296,7 @@ foreach ($fanPages as $page) {
                                 <thead>
                                     <tr>
                                         <th>Page ID</th>
-                                        <th>Trigger Words</th>
+                                        <th>Triggers</th>
                                         <th>Reply</th>
                                         <th>Image</th>
                                         <th>Actions</th>
@@ -296,9 +306,9 @@ foreach ($fanPages as $page) {
                                     <?php foreach ($replyRules as $rule): ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($rule['page_id']); ?></td>
-                                            <td><?php echo htmlspecialchars($rule['trigger_words']); ?></td>
+                                            <td><?php echo htmlspecialchars(strlen($rule['trigger_words']) > 15 ? substr($rule['trigger_words'], 0, 15) . '...' : $rule['trigger_words']); ?></td>
                                             <td class="text-truncate" style="max-width: 200px;">
-                                                <?php echo htmlspecialchars($rule['reply_text']); ?>
+                                                <?php echo htmlspecialchars(strlen($rule['reply_text']) > 15 ? substr($rule['reply_text'], 0, 15) . '...' : $rule['reply_text']); ?>
                                             </td>
                                             <td>
                                                 <?php if (!empty($rule['image_path'])): ?>

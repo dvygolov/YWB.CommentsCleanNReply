@@ -7,24 +7,23 @@ include_once __DIR__ . '/db.php';
 class FBWebhookHandler
 {
     private $db;
-    private $responses;
 
     public function __construct()
     {
         $this->db = new CommentsDatabase();
-        $this->responses = [];
     }
 
-    private function loadResponses($pageId) {
-        $this->responses = [];
+    private function loadResponses($pageId): array {
+        $responses = [];
         $rules = $this->db->getReplyRules($pageId);
         foreach ($rules as $rule) {
-            $this->responses[] = [
+            $responses[] = [
                 'keywords' => explode(',', $rule['trigger_words']),
                 'reply' => $rule['reply_text'],
                 'image' => $rule['image_path']
             ];
         }
+        return $responses;
     }
 
     public static function verify_challenge($get_params): bool
@@ -51,22 +50,19 @@ class FBWebhookHandler
             return;
         }
         
-        // Extract page ID from post_id (format: PAGE_ID_POST_NUMBER)
-        $pageId = explode('_', $changeValue['post_id'])[0];
+        $pageId = $input['entry'][0]['id'];
         $from_id = $changeValue['from']['id'];
         
         // If comment is from the page itself, do not process
         if ($pageId === $from_id) {
-            CommentsLogger::log(
-                "Comment is from the Page itself!", 'Info', false, Settings::$debug);
+            CommentsLogger::log( "Comment is from the Page itself!", 'Info');
             return;
         }
 
         $jsonData = json_encode($input, JSON_PRETTY_PRINT);
-        CommentsLogger::log("Got New Comment: {$jsonData}", 'Info', false, Settings::$debug);
+        CommentsLogger::log("Got New Comment: {$jsonData}", 'Info');
         
-        // Load responses for this specific page
-        $this->loadResponses($pageId);
+        $responses = $this->loadResponses($pageId);
         
         // Get page access token and settings
         $pageData = $this->db->getFanPages();
@@ -74,7 +70,7 @@ class FBWebhookHandler
         $pageData = reset($pageData);
         
         if (!$pageData) {
-            CommentsLogger::log("Page not found in database: {$pageId}", 'Error', true, Settings::$debug);
+            CommentsLogger::log("Page not found in database: {$pageId}", 'Error', true);
             return;
         }
         
@@ -91,10 +87,11 @@ class FBWebhookHandler
 
         $responseFound = false;
         // Check if the comment contains any keywords and respond
-        foreach ($this->responses as $response) {
+        foreach ($responses as $response) {
             foreach ($response['keywords'] as $keyword) {
-                CommentsLogger::log("Checking keyword:{$keyword}...", 'Trace', false, Settings::$debug);
+                CommentsLogger::log("Checking keyword:{$keyword}...", 'Trace');
                 if (stripos($commentMessage, trim($keyword)) !== false) {
+                    CommentsLogger::log("Keyword:{$keyword} found! Replying...", 'Trace');
                     $fb->reply_to_comment($commentId, $response['reply'], $response['image']);
                     $responseFound = true;
                     break 2;
@@ -106,10 +103,10 @@ class FBWebhookHandler
         if (!$responseFound) {
             if ($deleteMode) {
                 $fb->delete_comment($commentId);
-                CommentsLogger::log("Deleted comment: {$commentId}", 'Info', false, Settings::$debug);
+                CommentsLogger::log("Deleted comment: {$commentId}", 'Info');
             } else {
                 $fb->hide_comment($commentId);
-                CommentsLogger::log("Hidden comment: {$commentId}", 'Info', false, Settings::$debug);
+                CommentsLogger::log("Hidden comment: {$commentId}", 'Info');
             }
         }
     }

@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/settings.php';
 class CommentsLogger
 {
     private static $baseLogDir = __DIR__ . '/logs';
@@ -23,9 +23,8 @@ class CommentsLogger
     public static function log(
         string $msg,
         string $level = 'Trace',
-        bool $die = false,
-        bool $print = true
-    )
+        bool $die = false
+    ): void
     {
         $timestamp = gmdate('H:i:s');
         $logFile = self::getLogFilePath();
@@ -33,7 +32,7 @@ class CommentsLogger
 
         file_put_contents($logFile, $logMessage, FILE_APPEND);
 
-        if ($print){
+        if (Settings::$debug){
             switch($level){
                 case 'Error':
                     echo "<p style='color:red'>{$logMessage}</p>";
