@@ -7,7 +7,7 @@ require_once __DIR__ . '/logger.php';
 
 // Check if not logged in
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: adminlogin.php');
+    header('Location: login.php');
     exit;
 }
 

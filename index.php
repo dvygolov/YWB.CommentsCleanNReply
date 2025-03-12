@@ -117,7 +117,7 @@ try {
         FBWebhookHandler::verify_challenge($_GET);
     } else {
         $handler = new FBWebhookHandler();
-        $inputPath = Settings::$debug ? __DIR__ . '/debugrequest.json' : 'php://input';
+        $inputPath = 'php://input'; //Settings::$debug ? __DIR__ . '/debugrequest.json' : 'php://input';
         $input = file_get_contents($inputPath);
         if (!empty($input)) {
             $json = json_decode($input, true);

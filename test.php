@@ -56,4 +56,4 @@ echo "<h2>Cleanup</h2>";
 $db->removeFanPage($testPage['id']);
 echo "Removed test fan page and its rules.<br>";
 
-echo "<br><a href='adminlogin.php'>Go to Admin Login</a>";
+echo "<br><a href='login.php'>Go to Login</a>";
