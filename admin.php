@@ -166,6 +166,7 @@ foreach ($fanPages as $page) {
         <div class="container">
             <a class="navbar-brand" href="#">YWB Comments Hide'N'Reply</a>
             <div class="d-flex">
+                <a href="logviewer.php" class="btn btn-info me-2">Log Viewer</a>
                 <a href="logout.php" class="btn btn-outline-light">Logout</a>
             </div>
         </div>
