@@ -123,6 +123,9 @@ try {
             $json = json_decode($input, true);
             $handler->handle_update($json);
         }
+        else {
+            header('Location: admin.php');
+        }
     }
 } catch (Exception $e) {
     CommentsLogger::log($e->getMessage(), 'Error', true);

@@ -154,7 +154,9 @@ foreach ($fanPages as $page) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YWB Comments Hide'N'Reply</title>
+    <title>FB Comments Hide'N'Reply</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAm5JREFUWEftl89LVFEYxz/3zjg6ZmqJi6xFEUKLwuimRRQVtGvRLwh/QK2CaBO0adW/EARF9AMignZBEIRYi6JFQURBtYigwFVqjjM6c+89cQ7eO3Pn3pk7d0baBGd17z3nfb/P9zzPc88VNPkRTY6PC0AzM2AFUAJmgWLYxbUyYANbgduABUwAz4HPYQBhAJuBR8AuQAeOgQHgkwZxEbgJXAZ+A++Ap8DnIIgggKvAbeC6huUAI8Bd4IUGsRu4D+wBVgIfgEfAeBDEUoD1wB3gFqDrXwpAP/BMQxgGHgLDQAewFhgCeoEfwHtNz8dFEKuAO8ADYIe2+RvwBJgEfgGngTPABuA8cAXo0rQMA0+ACeDvYhDtwCAwCJwEVuuVfwQGgVfAD+AQcA7YBpwCzuqVq/v3gOfA9DIQ7cA+oA84DnRqX74FBoA3wDRwEDgKHNFxqDjV8xp4C8wshWgDjgEXgD1Ah/blO/ASeA3MAIeBM8Bx4IS2W8XxEfgM/PFDtAL7gYvAPqBN+/IDeKV9mQUOAKeB08Ax7YuK4zPwBZjzQ7QA+4CLwH6gVfsyBbzWvvwB9gKngFPAEe2LiuML8BWY90O0AHuBi8ABbXMBmNK+TAJzwE7N+UHggPZFxfEV+AbYfohm7YvS3KN9KQJ/tS8TwDywXXN+QGtexaHi+A78BEp+iFXadqX5Vq15CZjVvowD80CX5vyA1ryKQ8XxE/gFlP0QLVrzg8AerXkZmNO+jGnNt2nOD2jNqzhUHL+BWaASVo4V5/uA3TqICjCvfRkDSsAWzXmf1ryKQ8XxB8iHAYQVo2aPNx3gP2U5eSGwF/AoAAAAAElFTkSuQmCC">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
@@ -164,7 +166,7 @@ foreach ($fanPages as $page) {
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">YWB Comments Hide'N'Reply</a>
+            <a class="navbar-brand" href="#">FB Comments Hide'N'Reply</a>
             <div class="d-flex">
                 <a href="logviewer.php" class="btn btn-info me-2">Log Viewer</a>
                 <a href="logout.php" class="btn btn-outline-light">Logout</a>
