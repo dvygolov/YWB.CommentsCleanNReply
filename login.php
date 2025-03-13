@@ -14,7 +14,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
-    if (password_verify($password, Settings::$password)) {
+    if ($password === Settings::$password) {
         $_SESSION['admin_logged_in'] = true;
         header('Location: admin.php');
         exit;
