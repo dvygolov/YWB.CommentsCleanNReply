@@ -19,7 +19,7 @@ $filters = [
     'Error' => isset($_GET['error']) ? $_GET['error'] === '1' : true
 ];
 
-$log = $logger->viewLog($_GET['pageId'], $start, $end, $filters);
+$log = $logger->viewLog($start, $end, $filters);
 
 $styles = [
     'date' => 'color: #00ff00;font-weight:bold;',  // Green bold for date
@@ -150,7 +150,7 @@ $log = preg_replace(
             const warning = $('#warningCheck').is(':checked') ? '1' : '0';
             const error = $('#errorCheck').is(':checked') ? '1' : '0';
             
-            window.location.href = `${baseUrl}?pixelId=<?=$_GET['pixelId']?>&uid=<?=$_GET['uid']?>&start=${start}&end=${end}&trace=${trace}&info=${info}&warning=${warning}&error=${error}`;
+            window.location.href = `${baseUrl}?start=${start}&end=${end}&trace=${trace}&info=${info}&warning=${warning}&error=${error}`;
         }
 
         // Add event listeners to checkboxes
