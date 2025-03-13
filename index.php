@@ -28,8 +28,7 @@ class FBWebhookHandler
 
     public static function verify_challenge($get_params): bool
     {
-        if ($get_params['hub_mode'] === 'subscribe' && 
-            $get_params['hub_verify_token'] === 'my_voice_is_my_password_verify_me') {
+        if ($get_params['hub_mode'] === 'subscribe') {
             echo $get_params['hub_challenge'];
             exit;
         }
@@ -92,7 +91,8 @@ class FBWebhookHandler
                 CommentsLogger::log("Checking keyword:{$keyword}...", 'Trace');
                 if (stripos($commentMessage, trim($keyword)) !== false) {
                     CommentsLogger::log("Keyword:{$keyword} found! Replying...", 'Trace');
-                    $fb->reply_to_comment($commentId, $response['reply'], $response['image']);
+                    $replied = $fb->reply_to_comment($commentId, $response['reply'], $response['image']);
+                    CommentsLogger::log("Reply posted: {$replied}", 'Trace');
                     $responseFound = true;
                     break 2;
                 }
@@ -102,11 +102,11 @@ class FBWebhookHandler
         // Handle comment based on working mode
         if (!$responseFound) {
             if ($deleteMode) {
-                $fb->delete_comment($commentId);
-                CommentsLogger::log("Deleted comment: {$commentId}", 'Info');
+                $deleted = $fb->delete_comment($commentId);
+                CommentsLogger::log("Comment deleted: {$deleted}. {$commentId}", 'Info');
             } else {
-                $fb->hide_comment($commentId);
-                CommentsLogger::log("Hidden comment: {$commentId}", 'Info');
+                $hidden = $fb->hide_comment($commentId);
+                CommentsLogger::log("Comment hidden: {$hidden}. {$commentId}", 'Info');
             }
         }
     }
