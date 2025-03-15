@@ -64,9 +64,7 @@ class FBWebhookHandler
         $responses = $this->loadResponses($pageId);
         
         // Get page access token and settings
-        $pageData = $this->db->getFanPages();
-        $pageData = array_filter($pageData, function($p) use ($pageId) { return $p['id'] === $pageId; });
-        $pageData = reset($pageData);
+        $pageData = $this->db->getFanPage($pageId);
         
         if (!$pageData) {
             CommentsLogger::log("Page not found in database: {$pageId}", 'Error', true);
@@ -89,7 +87,8 @@ class FBWebhookHandler
         foreach ($responses as $response) {
             foreach ($response['keywords'] as $keyword) {
                 CommentsLogger::log("Checking keyword:{$keyword}...", 'Trace');
-                if (stripos($commentMessage, trim($keyword)) !== false) {
+                if (trim($keyword) === '*' ||
+                    stripos($commentMessage, trim($keyword)) !== false) {
                     CommentsLogger::log("Keyword:{$keyword} found! Replying...", 'Trace');
                     $replied = $fb->reply_to_comment($commentId, $response['reply'], $response['image']);
                     CommentsLogger::log("Reply posted: {$replied}", 'Trace');

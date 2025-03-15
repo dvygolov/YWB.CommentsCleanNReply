@@ -29,9 +29,9 @@ $pages = $db->getFanPages();
 echo "Fan pages in database:<br>";
 echo "<pre>" . print_r($pages, true) . "</pre>";
 
-echo "<h3>Getting Fan Page Token</h3>";
-$token = $db->getFanPageToken($testPage['id']);
-echo "Token for page {$testPage['id']}: " . $token . "<br>";
+echo "<h3>Getting Fan Page</h3>";
+$dbPage= $db->getFanPage($testPage['id']);
+echo "Page data: " . print_r($dbPage, true) . "<br>";
 
 // Test reply rules operations
 echo "<h2>Testing Reply Rules Operations</h2>";

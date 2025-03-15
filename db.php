@@ -69,12 +69,12 @@ class CommentsDatabase {
         return $pages;
     }
 
-    public function getFanPageToken(string $pageId): ?string {
-        $stmt = $this->prepare("SELECT access_token FROM fan_pages WHERE id = :id");
+    public function getFanPage(string $pageId): ?array {
+        $stmt = $this->prepare("SELECT id,access_token,delete_mode FROM fan_pages WHERE id = :id");
         $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
         $result = $stmt->execute();
         if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            return $row['access_token'];
+            return $row;
         }
         return null;
     }
