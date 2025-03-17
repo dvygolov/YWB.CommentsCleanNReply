@@ -14,4 +14,4 @@ USDT TRC20: TKeNEVndhPSKXuYmpEwF4fVtWUvfCnWmra
 Bitcoin: bc1qqv99jasckntqnk0pkjnrjtpwu0yurm0qd0gnqv  
 Ethereum: 0xBC118D3FDE78eE393A154C29A4545c575506ad6B  
 ```
-[All the info about this script is written here]([https://yellowweb.top/](https://yellowweb.top/yourowninstantcommentscleaner/)) in russian only, sorry :-)
+[All the info about this script is written here](https://yellowweb.top/yourowninstantcommentscleaner/) in russian only, sorry :-)
