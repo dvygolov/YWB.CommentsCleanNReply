@@ -209,11 +209,7 @@ foreach ($fanPages as $page) {
                             <div class="mb-3">
                                 <label for="page_id" class="form-label">Page</label>
                                 <div class="input-group">
-                                    <span class="input-group-text p-1">
-                                        <img id="page_avatar_preview" src="" alt="" class="rounded-circle" style="width: 32px; height: 32px; display: none;">
-                                    </span>
                                     <input type="text" class="form-control" id="page_id" name="page_id" placeholder="Page ID" required>
-                                    <span class="input-group-text" id="page_name_preview"></span>
                                 </div>
                                 <small class="form-text text-muted">Enter the Page ID, and the avatar and name will be fetched when you add the page</small>
                             </div>
