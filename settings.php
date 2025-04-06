@@ -3,7 +3,7 @@ class Settings{
     public static $password = "qwerty"; //password for admin panel
     public static $dbFilePath = __DIR__."/comments.db"; //change this for security reasons!
     public static $fbApiVersion = 22;
-    public static $debug = false;
+    public static $debug = true;
 }
 
 if (Settings::$debug){

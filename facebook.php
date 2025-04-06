@@ -9,16 +9,34 @@ class FacebookAPI {
         $this->page_access_token = $page_access_token;
     }
 
+    
+    public function get_page_info(string $page_id): array {
+        $url = $page_id . '?fields=name,picture';
+        $response = json_decode($this->make_curl_request($url, null, false, 'GET'), true);
+        
+        if (!$response || !isset($response['name'], $response['picture'])) {
+            CommentsLogger::log("Failed to retrieve page info: " . json_encode($response), 'Error', true);
+            return [];
+        }
+        
+        return [
+            'name' => $response['name'],
+            'avatar' => $response['picture']['data']['url']
+        ];
+    }
+
     public function subscribe_to_feed(string $page_id): bool {
         $url = $page_id . '/subscribed_apps?subscribed_fields=feed';
         $response = json_decode($this->make_curl_request($url), true);
-        
-        if (!$response || !isset($response['success'])) {
-            CommentsLogger::log("Failed to subscribe to page feed: " . json_encode($response), 'Error', true);
-            return false;
-        }
-        
-        return $response['success'];
+        return isset($response['success']) && $response['success'] === true;
+    }
+    
+    public function unsubscribe_from_feed(string $page_id): bool {
+        $url = $page_id . '/subscribed_apps';
+        // Facebook requires subscribed_fields parameter even when unsubscribing
+        // Pass an empty array as subscribed_fields to unsubscribe from all fields
+        $response = json_decode($this->make_curl_request($url, ['subscribed_fields' => 'feed'], false, 'DELETE'), true);
+        return isset($response['success']) && $response['success'] === true;
     }
 
     public function hide_comment(string $comment_id): bool {
@@ -68,23 +86,31 @@ class FacebookAPI {
         return !empty($response);
     }
 
-    private function make_curl_request(string $url, ?array $data = null, bool $multipart = false): string {
+    private function make_curl_request(string $url, ?array $data = null, bool $multipart = false, string $method = 'POST'): string {
         $baseUrl = "https://graph.facebook.com/v" . Settings::$fbApiVersion . ".0/";
         $finalUrl = $baseUrl . $url;
         if (is_null($data)) $data = [];
         $data['access_token'] = $this->page_access_token;
         
-        $ch = curl_init($finalUrl);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
-        if ($multipart) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // For GET requests, append parameters to URL
+        if ($method === 'GET') {
+            $finalUrl .= (strpos($finalUrl, '?') !== false ? '&' : '?') . http_build_query($data);
+            $ch = curl_init($finalUrl);
+            curl_setopt($ch, CURLOPT_HTTPGET, true);
         } else {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            // For POST requests
+            $ch = curl_init($finalUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            
+            if ($multipart) {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            } else {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            }
         }
         
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         
         $response = curl_exec($ch);
@@ -92,7 +118,7 @@ class FacebookAPI {
             $error_msg = curl_error($ch);
             unset($data['access_token']);
             $json_data = json_encode($data);
-            CommentsLogger::log("Error sending $json_data to url: $url $error_msg", 'Error', true);
+            CommentsLogger::log("Error sending $method request with $json_data to url: $url $error_msg", 'Error', true);
         }
         curl_close($ch);
         return $response;

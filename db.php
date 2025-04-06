@@ -23,6 +23,8 @@ class CommentsDatabase {
             $this->db->exec("CREATE TABLE IF NOT EXISTS fan_pages (
                 id TEXT PRIMARY KEY,
                 access_token TEXT NOT NULL,
+                page_name TEXT NOT NULL,
+                page_avatar TEXT,
                 delete_mode INTEGER DEFAULT 0
             )");
 
@@ -54,11 +56,13 @@ class CommentsDatabase {
     }
 
     // Fan Page Methods
-    public function addFanPage(string $pageId, string $accessToken, int $deleteMode): bool {
+    public function addFanPage(string $pageId, string $accessToken, string $pageName, string $pageAvatar, int $deleteMode): bool {
         try {
-            $stmt = $this->prepare("INSERT OR REPLACE INTO fan_pages (id, access_token, delete_mode) VALUES (:id, :token, :mode)");
+            $stmt = $this->prepare("INSERT OR REPLACE INTO fan_pages (id, access_token, page_name, page_avatar, delete_mode) VALUES (:id, :token, :name, :avatar, :mode)");
             $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
             $stmt->bindValue(':token', $accessToken, SQLITE3_TEXT);
+            $stmt->bindValue(':name', $pageName, SQLITE3_TEXT);
+            $stmt->bindValue(':avatar', $pageAvatar, SQLITE3_TEXT);
             $stmt->bindValue(':mode', $deleteMode, SQLITE3_INTEGER);
             return $stmt->execute() !== false;
         } catch (Exception $e) {
@@ -80,7 +84,7 @@ class CommentsDatabase {
 
     public function getFanPages(): array {
         try {
-            $result = $this->db->query("SELECT id, access_token, delete_mode FROM fan_pages");
+            $result = $this->db->query("SELECT id, access_token, page_name, page_avatar, delete_mode FROM fan_pages");
             $pages = [];
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                 $row['delete_mode'] = (bool)$row['delete_mode'];
@@ -95,7 +99,7 @@ class CommentsDatabase {
 
     public function getFanPage(string $pageId): ?array {
         try {
-            $stmt = $this->prepare("SELECT id,access_token,delete_mode FROM fan_pages WHERE id = :id");
+            $stmt = $this->prepare("SELECT id,access_token,page_name,page_avatar,delete_mode FROM fan_pages WHERE id = :id");
             $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
             $result = $stmt->execute();
             if ($row = $result->fetchArray(SQLITE3_ASSOC)) {

@@ -53,8 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // First try to subscribe to the page feed
         $fb = new FacebookAPI($accessToken);
         if ($fb->subscribe_to_feed($pageId)) {
+            $pageInfo = $fb->get_page_info($pageId);
+            if (empty($pageInfo)) {
+                $error = 'Failed to retrieve page info';
+                CommentsLogger::log("Failed to retrieve page info for {$pageId}", 'Error');
+                return;
+            }
             // Only add to database if subscription was successful
-            if ($db->addFanPage($pageId, $accessToken, $deleteMode)) {
+            if ($db->addFanPage($pageId, $accessToken, $pageInfo['name'], $pageInfo['avatar'], $deleteMode)) {
                 $message = 'Fan page added successfully';
             } else {
                 $error = 'Failed to add fan page to database';
@@ -64,6 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } elseif (isset($_POST['remove_page'])) {
         $pageId = $_POST['page_id'];
+        // Get page data to get the access token before removal
+        $pageData = $db->getFanPage($pageId);
+        if ($pageData) {
+            // Initialize Facebook API with page token and unsubscribe from feed
+            $fb = new FacebookAPI($pageData['access_token']);
+            $fb->unsubscribe_from_feed($pageId);
+        }
+        
+        // Now remove from database
         if ($db->removeFanPage($pageId)) {
             $message = "Fan page removed successfully!";
         } else {
@@ -192,8 +207,15 @@ foreach ($fanPages as $page) {
                     <div class="card-body">
                         <form method="post" class="mb-4">
                             <div class="mb-3">
-                                <label for="page_id" class="form-label">Page ID</label>
-                                <input type="text" class="form-control" id="page_id" name="page_id" required>
+                                <label for="page_id" class="form-label">Page</label>
+                                <div class="input-group">
+                                    <span class="input-group-text p-1">
+                                        <img id="page_avatar_preview" src="" alt="" class="rounded-circle" style="width: 32px; height: 32px; display: none;">
+                                    </span>
+                                    <input type="text" class="form-control" id="page_id" name="page_id" placeholder="Page ID" required>
+                                    <span class="input-group-text" id="page_name_preview"></span>
+                                </div>
+                                <small class="form-text text-muted">Enter the Page ID, and the avatar and name will be fetched when you add the page</small>
                             </div>
                             <div class="mb-3">
                                 <label for="access_token" class="form-label">Access Token</label>
@@ -217,7 +239,7 @@ foreach ($fanPages as $page) {
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Page ID</th>
+                                                <th>Page</th>
                                                 <th>Access Token</th>
                                                 <th class="text-center">Working Mode</th>
                                                 <th class="text-center">Actions</th>
@@ -226,7 +248,17 @@ foreach ($fanPages as $page) {
                                         <tbody>
                                             <?php foreach ($fanPages as $page): ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($page['id']); ?></td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <?php if (!empty($page['page_avatar'])): ?>
+                                                            <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                                        <?php endif; ?>
+                                                        <div>
+            <div><?php echo htmlspecialchars($page['page_name']); ?></div>
+            <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
+        </div>
+    </div>
+</td>
                                                 <td><?php echo htmlspecialchars(substr($page['access_token'], 0, 7) . '...'); ?></td>
                                                 <td class="text-center">
                                                     <form method="post" class="d-inline">
@@ -274,8 +306,12 @@ foreach ($fanPages as $page) {
                                 <select class="form-select" id="rule_page_id" name="page_id" required>
                                     <?php foreach ($fanPages as $page): ?>
                                         <option value="<?php echo htmlspecialchars($page['id']); ?>">
-                                            <?php echo htmlspecialchars($page['id']); ?>
-                                        </option>
+                                            <?php if (!empty($page['page_avatar'])): ?>
+                                                <?php echo htmlspecialchars($page['page_name']); ?> 
+                                            <?php else: ?>
+                                                <?php echo htmlspecialchars($page['id']); ?>
+                                            <?php endif; ?>
+</option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -298,7 +334,7 @@ foreach ($fanPages as $page) {
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Page ID</th>
+                                        <th>Page</th>
                                         <th>Triggers</th>
                                         <th>Reply</th>
                                         <th>Image</th>
@@ -308,7 +344,32 @@ foreach ($fanPages as $page) {
                                 <tbody>
                                     <?php foreach ($replyRules as $rule): ?>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($rule['page_id']); ?></td>
+                                            <td>
+                                                <?php
+                                                $pageId = $rule['page_id'];
+                                                $pageFound = false;
+                                                foreach ($fanPages as $page) {
+                                                    if ($page['id'] === $pageId) {
+                                                        $pageFound = true;
+                                                        ?>
+                                                        <div class="d-flex align-items-center">
+                                                            <?php if (!empty($page['page_avatar'])): ?>
+                                                                <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                                            <?php endif; ?>
+                <div>
+                    <div><?php echo htmlspecialchars($page['page_name']); ?></div>
+                    <small class="text-muted"><?php echo htmlspecialchars($pageId); ?></small>
+                </div>
+            </div>
+            <?php
+            break;
+        }
+    }
+    if (!$pageFound) {
+        echo htmlspecialchars($pageId);
+    }
+    ?>
+</td>
                                             <td><?php echo htmlspecialchars(strlen($rule['trigger_words']) > 15 ? substr($rule['trigger_words'], 0, 15) . '...' : $rule['trigger_words']); ?></td>
                                             <td class="text-truncate" style="max-width: 200px;">
                                                 <?php echo htmlspecialchars(strlen($rule['reply_text']) > 15 ? substr($rule['reply_text'], 0, 15) . '...' : $rule['reply_text']); ?>

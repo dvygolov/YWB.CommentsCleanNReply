@@ -18,8 +18,8 @@
             "name": "Launch Firefox (Admin)",
             "type": "firefox",
             "request": "launch",
-            "url": "http://localhost:8080/admin/",
-            "webRoot": "${workspaceFolder}/admin/",
+            "url": "http://localhost:8080/",
+            "webRoot": "${workspaceFolder}/",
             "pathMappings": [
                 {
                     "url": "http://localhost:8080",
