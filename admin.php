@@ -211,7 +211,7 @@ foreach ($fanPages as $page) {
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="page_id" name="page_id" placeholder="Page ID" required>
                                 </div>
-                                <small class="form-text text-muted">Enter the Page ID, and the avatar and name will be fetched when you add the page</small>
+                                <small class="form-text text-muted">Enter the Page ID, the avatar and name will be fetched when you add the page</small>
                             </div>
                             <div class="mb-3">
                                 <label for="access_token" class="form-label">Access Token</label>
