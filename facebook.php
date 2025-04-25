@@ -9,15 +9,12 @@ class FacebookAPI {
         $this->page_access_token = $page_access_token;
     }
 
-    
     public function get_page_info(string $page_id): array {
-        $url = $page_id . '?fields=name,picture';
-        $response = json_decode($this->make_curl_request($url, null, false, 'GET'), true);
+        $url = $page_id . '?fields=name,picture.type(large)';
+        $response = $this->make_curl_request($url, null, false, 'GET');
+        $response = json_decode($response, true);
         
-        if (!$response || !isset($response['name'], $response['picture'])) {
-            CommentsLogger::log("Failed to retrieve page info: " . json_encode($response), 'Error', true);
-            return [];
-        }
+        $this->check_for_errors($response, 'get_page_info');
         
         return [
             'name' => $response['name'],
@@ -28,6 +25,7 @@ class FacebookAPI {
     public function subscribe_to_feed(string $page_id): bool {
         $url = $page_id . '/subscribed_apps?subscribed_fields=feed';
         $response = json_decode($this->make_curl_request($url), true);
+        $this->check_for_errors($response, 'subscribe_to_feed');
         return isset($response['success']) && $response['success'] === true;
     }
     
@@ -36,6 +34,7 @@ class FacebookAPI {
         // Facebook requires subscribed_fields parameter even when unsubscribing
         // Pass an empty array as subscribed_fields to unsubscribe from all fields
         $response = json_decode($this->make_curl_request($url, ['subscribed_fields' => 'feed'], false, 'DELETE'), true);
+        $this->check_for_errors($response, 'unsubscribe_from_feed');
         return isset($response['success']) && $response['success'] === true;
     }
 
@@ -43,31 +42,35 @@ class FacebookAPI {
         $url = $comment_id;
         $data = ['is_hidden' => 'true'];
         $response = $this->make_curl_request($url, $data);
-        return $response === 'true';
+        $response = json_decode($response, true);
+        $this->check_for_errors($response, 'hide_comment');
+        return $response === true || $response === 'true';
     }
 
     public function delete_comment(string $comment_id): bool {
         $url = $comment_id;
-        $response = $this->make_curl_request($url, ['method' => 'delete']);
-        return $response === 'true';
+        $response = json_decode($this->make_curl_request($url, null, false, 'DELETE'), true);
+        $this->check_for_errors($response, 'delete_comment');
+        return isset($response['success']) && $response['success'] === true;
     }
 
     public function reply_to_comment(string $comment_id, string $message, ?string $image_path = null): bool {
         $url = $comment_id . '/comments';
         $data = ['message' => $message];
-
-        // If image path is provided, attach it to the comment
-        if ($image_path !== null) {
-            $fullPath = __DIR__ . '/uploads/' . $image_path;
+        
+        // Handle image attachment if provided
+        if (!is_null($image_path) && !empty($image_path)) {
+            $fullPath = __DIR__ . '/images/' . $image_path;
             if (file_exists($fullPath)) {
-                // First upload the photo to get its ID
+                // Upload the photo first
                 $photoUrl = 'me/photos';
                 $photoData = [
                     'published' => 'false',
                     'source' => new CURLFile($fullPath)
                 ];
-                
                 $photoResponse = json_decode($this->make_curl_request($photoUrl, $photoData, true), true);
+                
+                $this->check_for_errors($photoResponse, 'reply_to_comment');
                 
                 if (isset($photoResponse['id'])) {
                     // Attach the uploaded photo to the comment
@@ -83,7 +86,22 @@ class FacebookAPI {
         }
 
         $response = $this->make_curl_request($url, $data);
-        return !empty($response);
+        $responseData = json_decode($response, true);
+        
+        $this->check_for_errors($responseData, 'reply_to_comment');
+        
+        return !empty($responseData);
+    }
+
+    private function check_for_errors($response, string $methodName = ''):void
+    {
+        if (!isset($response['error'])) return;
+        $errorMessage = $response['error']['message'] ?? 'Unknown error';
+        $errorType = $response['error']['type'] ?? 'Unknown type';
+        $errorCode = $response['error']['code'] ?? 'Unknown code';
+        
+        $logMessage = "Facebook API error in method '$methodName': $errorMessage (Type: $errorType, Code: $errorCode)";
+        CommentsLogger::log($logMessage, 'Error', true);
     }
 
     private function make_curl_request(string $url, ?array $data = null, bool $multipart = false, string $method = 'POST'): string {

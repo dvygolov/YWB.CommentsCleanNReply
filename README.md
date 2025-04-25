@@ -1,5 +1,5 @@
 ﻿```
-                     Instant Comments Clean'N'Reply
+                   Instant FB Comments Clean'N'Reply
     _            __     __  _ _             __          __  _     
    | |           \ \   / / | | |            \ \        / / | |    
    | |__  _   _   \ \_/ /__| | | _____      _\ \  /\  / /__| |__  

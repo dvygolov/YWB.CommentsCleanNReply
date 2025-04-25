@@ -21,7 +21,7 @@ $testRule = [
 echo "<h2>Testing Fan Page Operations</h2>";
 
 echo "<h3>Adding Fan Page</h3>";
-$result = $db->addFanPage($testPage['id'], $testPage['access_token'],false);
+$result = $db->addFanPage($testPage['id'], $testPage['access_token'],'Test Page','ava.png',false);
 echo "Add fan page result: " . ($result ? "Success" : "Failed") . "<br>";
 
 echo "<h3>Getting Fan Pages</h3>";
