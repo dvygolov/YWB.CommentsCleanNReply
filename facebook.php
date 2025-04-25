@@ -93,7 +93,7 @@ class FacebookAPI {
         return !empty($responseData);
     }
 
-    private function check_for_errors($response, string $methodName = ''):void
+    private function check_for_errors($response, string $methodName = '', $die=false):void
     {
         if (!isset($response['error'])) return;
         $errorMessage = $response['error']['message'] ?? 'Unknown error';
@@ -101,7 +101,7 @@ class FacebookAPI {
         $errorCode = $response['error']['code'] ?? 'Unknown code';
         
         $logMessage = "Facebook API error in method '$methodName': $errorMessage (Type: $errorType, Code: $errorCode)";
-        CommentsLogger::log($logMessage, 'Error', true);
+        CommentsLogger::log($logMessage, 'Error', $die);
     }
 
     private function make_curl_request(string $url, ?array $data = null, bool $multipart = false, string $method = 'POST'): string {
