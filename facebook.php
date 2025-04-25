@@ -44,7 +44,7 @@ class FacebookAPI {
         $response = $this->make_curl_request($url, $data);
         $response = json_decode($response, true);
         $this->check_for_errors($response, 'hide_comment');
-        return $response === true || $response === 'true';
+        return isset($response['success']) && $response['success'] === true;
     }
 
     public function delete_comment(string $comment_id): bool {

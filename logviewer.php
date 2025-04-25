@@ -76,8 +76,8 @@ $log = preg_replace(
 <html>
 <head>
     <title>Comments Clean'N'Reply Log Viewer</title>
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="favicon.svg" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -106,6 +106,11 @@ $log = preg_replace(
 </head>
 <body>
     <div class="container">
+        <div class="row mt-3 mb-3">
+            <div class="col-12">
+                <a href="admin.php" class="btn btn-primary">&larr; Back to Admin Panel</a>
+            </div>
+        </div>
         <div class="date-picker-container">
             <div class="row">
                 <div class="col-md-6">

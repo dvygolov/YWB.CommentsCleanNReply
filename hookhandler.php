@@ -95,7 +95,8 @@ class FBWebhookHandler
                     stripos($commentMessage, trim($keyword)) !== false) {
                     CommentsLogger::log("Keyword:{$keyword} found! Replying...", 'Trace');
                     $replied = $fb->reply_to_comment($commentId, $response['reply'], $response['image']);
-                    CommentsLogger::log("Reply posted: {$replied}", 'Trace');
+                    $rText = $replied?'true':'false';
+                    CommentsLogger::log("Reply posted: {$rText}", 'Trace');
                     $responseFound = true;
                     break 2;
                 }
@@ -107,10 +108,12 @@ class FBWebhookHandler
             CommentsLogger::log("No matching keywords found. Comment will be hidden or deleted based on mode.", 'Trace');
             if ($deleteMode) {
                 $deleted = $fb->delete_comment($commentId);
-                CommentsLogger::log("Comment deleted: {$deleted}. {$commentId}", 'Info');
+                $dText = $deleted?'true':'false';
+                CommentsLogger::log("Comment deleted: {$dText}. Comment ID: {$commentId}", 'Info');
             } else {
                 $hidden = $fb->hide_comment($commentId);
-                CommentsLogger::log("Comment hidden: {$hidden}. {$commentId}", 'Info');
+                $hText = $hidden?'true':'false';
+                CommentsLogger::log("Comment hidden: {$hText}. Comment ID: {$commentId}", 'Info');
             }
         }
     }
