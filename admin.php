@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_page'])) {
         $pageId = $_POST['page_id'];
         $accessToken = $_POST['access_token'];
-        $deleteMode = isset($_POST['delete_mode']) ? 1 : 0;
         
         // First try to subscribe to the page feed
         $fb = new FacebookAPI($accessToken);
@@ -59,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 CommentsLogger::log("Failed to retrieve page info for {$pageId}", 'Error');
                 return;
             }
-            // Only add to database if subscription was successful
-            if ($db->addFanPage($pageId, $accessToken, $pageInfo['name'], $pageInfo['avatar'], $deleteMode)) {
+            // Only add to database if subscription was successful (cleaner disabled by default)
+            if ($db->addFanPage($pageId, $accessToken, $pageInfo['name'], $pageInfo['avatar'], 0)) {
                 $message = 'Fan page added successfully';
             } else {
                 $error = 'Failed to add fan page to database';
@@ -91,6 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Working mode updated successfully!";
         } else {
             $error = "Failed to update working mode.";
+        }
+    } elseif (isset($_POST['toggle_cleaner'])) {
+        $pageId = $_POST['page_id'];
+        $cleanerEnabled = isset($_POST['cleaner_enabled']) ? 1 : 0;
+        if ($db->updateCleanerStatus($pageId, $cleanerEnabled)) {
+            $message = "Cleaner status updated successfully!";
+        } else {
+            $error = "Failed to update cleaner status.";
         }
     } elseif (isset($_POST['action']) && $_POST['action'] === 'add_rule') {
         $pageId = $_POST['page_id'];
@@ -159,9 +166,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Get current data
 $fanPages = $db->getFanPages();
 $replyRules = [];
+$tokenValidation = [];
+
+// Validate all tokens
 foreach ($fanPages as $page) {
     $rules = $db->getReplyRules($page['id']);
     $replyRules = array_merge($replyRules, $rules);
+    
+    // Validate token
+    $fb = new FacebookAPI($page['access_token']);
+    $validation = $fb->validate_token();
+    $tokenValidation[$page['id']] = $validation;
 }
 ?>
 <!DOCTYPE html>
@@ -176,11 +191,111 @@ foreach ($fanPages as $page) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
         .form-switch .form-check-input { margin-left: 0; }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            height: calc(100vh - 56px);
+            background: #212529;
+            transition: width 0.3s ease;
+            z-index: 1000;
+            overflow-x: hidden;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar.expanded {
+            width: 250px;
+        }
+        
+        .sidebar.collapsed {
+            width: 60px;
+        }
+        
+        .sidebar-toggle {
+            padding: 15px;
+            color: #fff;
+            cursor: pointer;
+            border-bottom: 1px solid #343a40;
+            text-align: center;
+        }
+        
+        .sidebar-toggle:hover {
+            background: #343a40;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu li {
+            border-bottom: 1px solid #343a40;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            color: #adb5bd;
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .sidebar-menu a:hover {
+            background: #343a40;
+            color: #fff;
+        }
+        
+        .sidebar-menu a.active {
+            background: #0d6efd;
+            color: #fff;
+        }
+        
+        .sidebar-menu i {
+            font-size: 1.2rem;
+            min-width: 30px;
+        }
+        
+        .sidebar-menu span {
+            margin-left: 10px;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        
+        .sidebar.collapsed .sidebar-menu span {
+            opacity: 0;
+            width: 0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            transition: margin-left 0.3s ease;
+        }
+        
+        .main-content.expanded {
+            margin-left: 250px;
+        }
+        
+        .main-content.collapsed {
+            margin-left: 60px;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="#">FB Comments Hide'N'Reply</a>
             <div class="d-flex">
                 <a href="logviewer.php" class="btn btn-info me-2">Log Viewer</a>
@@ -189,7 +304,36 @@ foreach ($fanPages as $page) {
         </div>
     </nav>
 
-    <div class="container my-4">
+    <!-- Sidebar -->
+    <div class="sidebar expanded" id="sidebar">
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="active" onclick="showSection('pages', this)">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Pages</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('cleaner', this)">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Cleaner</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showSection('replies', this)">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Replies</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content expanded" id="mainContent">
+        <div class="container my-4">
         <?php if ($message): ?>
             <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
@@ -197,9 +341,11 @@ foreach ($fanPages as $page) {
             <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <div class="row">
+        <!-- Pages Section -->
+        <div id="pagesSection" class="content-section active">
+            <div class="row">
             <!-- Fan Pages Section -->
-            <div class="col-md-6 mb-4">
+            <div class="col-12 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Fan Pages</h5>
@@ -217,12 +363,6 @@ foreach ($fanPages as $page) {
                                 <label for="access_token" class="form-label">Access Token</label>
                                 <input type="text" class="form-control" id="access_token" name="access_token" required>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="delete_mode" name="delete_mode" value="1">
-                                    <label class="form-check-label" for="delete_mode">Delete comments (if unchecked, comments will be hidden)</label>
-                                </div>
-                            </div>
                             <button type="submit" name="add_page" class="btn btn-primary">Add Fan Page</button>
                         </form>
 
@@ -237,7 +377,7 @@ foreach ($fanPages as $page) {
                                             <tr>
                                                 <th>Page</th>
                                                 <th>Access Token</th>
-                                                <th class="text-center">Working Mode</th>
+                                                <th class="text-center">Status</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -257,16 +397,14 @@ foreach ($fanPages as $page) {
 </td>
                                                 <td><?php echo htmlspecialchars(substr($page['access_token'], 0, 7) . '...'); ?></td>
                                                 <td class="text-center">
-                                                    <form method="post" class="d-inline">
-                                                        <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
-                                                        <div class="form-check form-switch d-flex justify-content-center">
-                                                            <input class="form-check-input" type="checkbox" name="delete_mode" value="1" 
-                                                                   <?php echo $page['delete_mode'] ? 'checked' : ''; ?> 
-                                                                   onchange="this.form.submit()">
-                                                            <label class="form-check-label ms-2"><?php echo $page['delete_mode'] ? 'Delete' : 'Hide'; ?></label>
-                                                        </div>
-                                                        <input type="hidden" name="update_mode" value="1">
-                                                    </form>
+                                                    <?php 
+                                                    $validation = $tokenValidation[$page['id']] ?? ['valid' => false, 'error' => 'Unknown'];
+                                                    if ($validation['valid']): 
+                                                    ?>
+                                                        <span title="Token is valid">✅</span>
+                                                    <?php else: ?>
+                                                        <span title="<?php echo htmlspecialchars($validation['error']); ?>">❌ <?php echo htmlspecialchars($validation['error']); ?></span>
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td class="text-center">
                                                     <form method="post" class="d-inline">
@@ -287,9 +425,83 @@ foreach ($fanPages as $page) {
                     </div>
                 </div>
             </div>
+            </div>
+        </div>
 
+        <!-- Cleaner Section -->
+        <div id="cleanerSection" class="content-section">
+            <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Comments Cleaner Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Configure comment processing mode for each page. Comments can be either hidden or permanently deleted.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Page</th>
+                                        <th class="text-center">Cleaner Status</th>
+                                        <th class="text-center">Processing Mode</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($fanPages as $page): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <?php if (!empty($page['page_avatar'])): ?>
+                                                    <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                                <?php endif; ?>
+                                                <div>
+                                                    <div><?php echo htmlspecialchars($page['page_name']); ?></div>
+                                                    <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="post" class="d-inline">
+                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                    <input class="form-check-input" type="checkbox" name="cleaner_enabled" value="1" 
+                                                           <?php echo $page['cleaner_enabled'] ? 'checked' : ''; ?> 
+                                                           onchange="this.form.submit()">
+                                                    <label class="form-check-label ms-2"><?php echo $page['cleaner_enabled'] ? 'ON' : 'OFF'; ?></label>
+                                                </div>
+                                                <input type="hidden" name="toggle_cleaner" value="1">
+                                            </form>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="post" class="d-inline">
+                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
+                                                <div class="form-check form-switch d-flex justify-content-center">
+                                                    <input class="form-check-input" type="checkbox" name="delete_mode" value="1" 
+                                                           <?php echo $page['delete_mode'] ? 'checked' : ''; ?> 
+                                                           onchange="this.form.submit()"
+                                                           <?php echo !$page['cleaner_enabled'] ? 'disabled' : ''; ?>>
+                                                    <label class="form-check-label ms-2"><?php echo $page['delete_mode'] ? 'Delete' : 'Hide'; ?></label>
+                                                </div>
+                                                <input type="hidden" name="update_mode" value="1">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Replies Section -->
+        <div id="repliesSection" class="content-section">
+            <div class="row">
             <!-- Reply Rules Section -->
-            <div class="col-md-6 mb-4">
+            <div class="col-12 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Reply Rules</h5>
@@ -447,9 +659,59 @@ foreach ($fanPages as $page) {
                     </div>
                 </div>
             </div>
+            </div>
+        </div>
+
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar expanded/collapsed
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (sidebar.classList.contains('expanded')) {
+                sidebar.classList.remove('expanded');
+                sidebar.classList.add('collapsed');
+                mainContent.classList.remove('expanded');
+                mainContent.classList.add('collapsed');
+            } else {
+                sidebar.classList.remove('collapsed');
+                sidebar.classList.add('expanded');
+                mainContent.classList.remove('collapsed');
+                mainContent.classList.add('expanded');
+            }
+        }
+        
+        // Show selected section
+        function showSection(sectionName, element) {
+            // Prevent default link behavior
+            event.preventDefault();
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all menu items
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            if (sectionName === 'pages') {
+                document.getElementById('pagesSection').classList.add('active');
+            } else if (sectionName === 'cleaner') {
+                document.getElementById('cleanerSection').classList.add('active');
+            } else if (sectionName === 'replies') {
+                document.getElementById('repliesSection').classList.add('active');
+            }
+            
+            // Add active class to clicked menu item
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>

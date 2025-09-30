@@ -71,6 +71,13 @@ class FBWebhookHandler
             CommentsLogger::log("Got page data for {$pageId}", 'Trace');
         }
         
+        // Check if cleaner is enabled for this page
+        $cleanerEnabled = isset($pageData['cleaner_enabled']) ? (bool)$pageData['cleaner_enabled'] : false;
+        if (!$cleanerEnabled) {
+            CommentsLogger::log("Cleaner is disabled for page {$pageId}. Skipping comment processing.", 'Info');
+            return;
+        }
+        
         $accessToken = $pageData['access_token'];
         $deleteMode = $pageData['delete_mode'];
         

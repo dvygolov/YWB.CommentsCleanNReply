@@ -22,6 +22,25 @@ class FacebookAPI {
         ];
     }
 
+    public function validate_token(): array {
+        $url = 'me';
+        $response = $this->make_curl_request($url, null, false, 'GET');
+        $response = json_decode($response, true);
+        
+        if (isset($response['error'])) {
+            return [
+                'valid' => false,
+                'error' => $response['error']['message'] ?? 'Unknown error'
+            ];
+        }
+        
+        return [
+            'valid' => true,
+            'id' => $response['id'] ?? null,
+            'name' => $response['name'] ?? null
+        ];
+    }
+
     public function subscribe_to_feed(string $page_id): bool {
         $url = $page_id . '/subscribed_apps?subscribed_fields=feed';
         $response = json_decode($this->make_curl_request($url), true);

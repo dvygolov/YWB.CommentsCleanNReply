@@ -25,8 +25,19 @@ class CommentsDatabase {
                 access_token TEXT NOT NULL,
                 page_name TEXT NOT NULL,
                 page_avatar TEXT,
-                delete_mode INTEGER DEFAULT 0
+                delete_mode INTEGER DEFAULT 0,
+                cleaner_enabled INTEGER DEFAULT 0
             )");
+            
+            // Add cleaner_enabled column if it doesn't exist (for existing databases)
+            $result = $this->db->query("PRAGMA table_info(fan_pages)");
+            $columns = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $columns[] = $row['name'];
+            }
+            if (!in_array('cleaner_enabled', $columns)) {
+                $this->db->exec("ALTER TABLE fan_pages ADD COLUMN cleaner_enabled INTEGER DEFAULT 0");
+            }
 
             // Table for storing comment reply rules
             $this->db->exec("CREATE TABLE IF NOT EXISTS reply_rules (
@@ -56,9 +67,9 @@ class CommentsDatabase {
     }
 
     // Fan Page Methods
-    public function addFanPage(string $pageId, string $accessToken, string $pageName, string $pageAvatar, int $deleteMode): bool {
+    public function addFanPage(string $pageId, string $accessToken, string $pageName, string $pageAvatar, int $deleteMode = 0): bool {
         try {
-            $stmt = $this->prepare("INSERT OR REPLACE INTO fan_pages (id, access_token, page_name, page_avatar, delete_mode) VALUES (:id, :token, :name, :avatar, :mode)");
+            $stmt = $this->prepare("INSERT OR REPLACE INTO fan_pages (id, access_token, page_name, page_avatar, delete_mode, cleaner_enabled) VALUES (:id, :token, :name, :avatar, :mode, 0)");
             $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
             $stmt->bindValue(':token', $accessToken, SQLITE3_TEXT);
             $stmt->bindValue(':name', $pageName, SQLITE3_TEXT);
@@ -84,10 +95,11 @@ class CommentsDatabase {
 
     public function getFanPages(): array {
         try {
-            $result = $this->db->query("SELECT id, access_token, page_name, page_avatar, delete_mode FROM fan_pages");
+            $result = $this->db->query("SELECT id, access_token, page_name, page_avatar, delete_mode, cleaner_enabled FROM fan_pages");
             $pages = [];
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                 $row['delete_mode'] = (bool)$row['delete_mode'];
+                $row['cleaner_enabled'] = (bool)$row['cleaner_enabled'];
                 $pages[] = $row;
             }
             return $pages;
@@ -99,7 +111,7 @@ class CommentsDatabase {
 
     public function getFanPage(string $pageId): ?array {
         try {
-            $stmt = $this->prepare("SELECT id,access_token,page_name,page_avatar,delete_mode FROM fan_pages WHERE id = :id");
+            $stmt = $this->prepare("SELECT id,access_token,page_name,page_avatar,delete_mode,cleaner_enabled FROM fan_pages WHERE id = :id");
             $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
             $result = $stmt->execute();
             if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -120,6 +132,18 @@ class CommentsDatabase {
             return $stmt->execute() !== false;
         } catch (Exception $e) {
             CommentsLogger::log("Error updating fan page mode: " . $e->getMessage(), 'Error', true);
+            return false;
+        }
+    }
+
+    public function updateCleanerStatus(string $pageId, bool $enabled): bool {
+        try {
+            $stmt = $this->prepare("UPDATE fan_pages SET cleaner_enabled = :enabled WHERE id = :id");
+            $stmt->bindValue(':id', $pageId, SQLITE3_TEXT);
+            $stmt->bindValue(':enabled', $enabled ? 1 : 0, SQLITE3_INTEGER);
+            return $stmt->execute() !== false;
+        } catch (Exception $e) {
+            CommentsLogger::log("Error updating cleaner status: " . $e->getMessage(), 'Error', true);
             return false;
         }
     }
