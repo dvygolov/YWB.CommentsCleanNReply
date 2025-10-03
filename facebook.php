@@ -147,6 +147,64 @@ class FacebookAPI {
         return !empty($response);
     }
 
+    public function get_app_info(): array {
+        $url = 'app';
+        $response = $this->make_curl_request($url, null, false, 'GET');
+        
+        if (isset($response['error'])) {
+            $this->check_for_errors($response, 'get_app_info');
+            return [];
+        }
+        
+        return [
+            'id' => $response['id'] ?? null,
+            'name' => $response['name'] ?? null
+        ];
+    }
+
+    public function subscribe_app(string $app_id, string $callback_url, string $verify_token = 'my_verify_token'): bool {
+        $url = $app_id . '/subscriptions?debug=true';
+        $data = [
+            'object' => 'page',
+            'callback_url' => $callback_url,
+            'fields' => ['feed'],
+            'verify_token' => $verify_token
+        ];
+        $response = $this->make_curl_request($url, $data);
+        
+        if (isset($response['error'])) {
+            $this->check_for_errors($response, 'subscribe_app');
+            return false;
+        }
+        
+        return isset($response['success']) && $response['success'] === true;
+    }
+
+    public function get_app_subscriptions(string $app_id): array {
+        $url = $app_id . '/subscriptions';
+        $response = $this->make_curl_request($url, null, false, 'GET');
+        
+        if (isset($response['error'])) {
+            $this->check_for_errors($response, 'get_app_subscriptions');
+            return [];
+        }
+        
+        return $response['data'] ?? [];
+    }
+
+    public function unsubscribe_app(string $app_id, string $object = 'page'): bool {
+        $url = $app_id . '/subscriptions';
+        $data = ['object' => $object];
+        $response = $this->make_curl_request($url, $data, false, 'DELETE');
+        
+        if (isset($response['error'])) {
+            $this->check_for_errors($response, 'unsubscribe_app');
+            return false;
+        }
+        
+        return isset($response['success']) && $response['success'] === true;
+    }
+
     public function clean_page_content(string $page_id): array {
         $deletedPosts = 0;
         $deletedPhotos = 0;
@@ -285,8 +343,17 @@ class FacebookAPI {
         $errorMessage = $response['error']['message'] ?? 'Unknown error';
         $errorType = $response['error']['type'] ?? 'Unknown type';
         $errorCode = $response['error']['code'] ?? 'Unknown code';
+        $errorTitle = $response['error']['error_user_title'] ?? '';
+        $errorMsg = $response['error']['error_user_msg'] ?? '';
         
         $logMessage = "Facebook API error in method '$methodName': $errorMessage (Type: $errorType, Code: $errorCode)";
+        if (!empty($errorTitle)) {
+            $logMessage .= " | Title: $errorTitle";
+        }
+        if (!empty($errorMsg)) {
+            $logMessage .= " | User Message: $errorMsg";
+        }
+        
         CommentsLogger::log($logMessage, 'Error', $die);
     }
 

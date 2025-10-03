@@ -48,6 +48,13 @@ class CommentsDatabase {
                 image_path TEXT,
                 FOREIGN KEY (page_id) REFERENCES fan_pages(id) ON DELETE CASCADE
             )");
+            
+            // Table for storing Facebook apps
+            $this->db->exec("CREATE TABLE IF NOT EXISTS apps (
+                app_id TEXT PRIMARY KEY,
+                app_name TEXT NOT NULL,
+                app_token TEXT NOT NULL
+            )");
         } catch (Exception $e) {
             CommentsLogger::log("Error creating tables: " . $e->getMessage(), 'Error', true);
         }
@@ -229,6 +236,58 @@ class CommentsDatabase {
         } catch (Exception $e) {
             CommentsLogger::log("Error finding matching rules: " . $e->getMessage(), 'Error', true);
             return [];
+        }
+    }
+
+    // App Methods
+    public function addApp(string $appId, string $appName, string $appToken): bool {
+        try {
+            $stmt = $this->prepare("INSERT OR REPLACE INTO apps (app_id, app_name, app_token) VALUES (:id, :name, :token)");
+            $stmt->bindValue(':id', $appId, SQLITE3_TEXT);
+            $stmt->bindValue(':name', $appName, SQLITE3_TEXT);
+            $stmt->bindValue(':token', $appToken, SQLITE3_TEXT);
+            return $stmt->execute() !== false;
+        } catch (Exception $e) {
+            CommentsLogger::log("Error adding app: " . $e->getMessage(), 'Error', true);
+            return false;
+        }
+    }
+
+    public function removeApp(string $appId): bool {
+        try {
+            $stmt = $this->prepare("DELETE FROM apps WHERE app_id = :id");
+            $stmt->bindValue(':id', $appId, SQLITE3_TEXT);
+            return $stmt->execute() !== false;
+        } catch (Exception $e) {
+            CommentsLogger::log("Error removing app: " . $e->getMessage(), 'Error', true);
+            return false;
+        }
+    }
+
+    public function getApps(): array {
+        try {
+            $result = $this->db->query("SELECT app_id, app_name, app_token FROM apps");
+            $apps = [];
+            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                $apps[] = $row;
+            }
+            return $apps;
+        } catch (Exception $e) {
+            CommentsLogger::log("Error getting apps: " . $e->getMessage(), 'Error', true);
+            return [];
+        }
+    }
+
+    public function getApp(string $appId): ?array {
+        try {
+            $stmt = $this->prepare("SELECT app_id, app_name, app_token FROM apps WHERE app_id = :id");
+            $stmt->bindValue(':id', $appId, SQLITE3_TEXT);
+            $result = $stmt->execute();
+            $app = $result->fetchArray(SQLITE3_ASSOC);
+            return $app ?: null;
+        } catch (Exception $e) {
+            CommentsLogger::log("Error getting app: " . $e->getMessage(), 'Error', true);
+            return null;
         }
     }
 }

@@ -1,9 +1,6 @@
 <?php
 session_start();
 require_once __DIR__ . '/settings.php';
-require_once __DIR__ . '/db.php';
-require_once __DIR__ . '/facebook.php';
-require_once __DIR__ . '/logger.php'; 
 
 // Check if not logged in
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
@@ -11,213 +8,23 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-$db = new CommentsDatabase();
-$message = '';
-$error = '';
-$availablePages = [];
+// Determine which page to show
+$currentPage = $_GET['page'] ?? 'apps';
+$allowedPages = ['apps', 'pages', 'cleaner', 'replies'];
 
-// Handle file upload
-function handleImageUpload($file) {
-    if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
-        CommentsLogger::log("No file uploaded or empty file", 'Warning');
-        return null;
-    }
-
-    // Validate file type
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (!in_array($file['type'], $allowedTypes)) {
-        CommentsLogger::log("Invalid file type: " . $file['type'], 'Error');
-        return false;
-    }
-
-    // Generate unique filename
-    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $filename = uniqid() . '.' . $ext;
-    $uploadPath = __DIR__ . '/uploads/' . $filename;
-
-    // Move uploaded file
-    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        CommentsLogger::log("File successfully uploaded to: " . $uploadPath, 'Info');
-        return $filename;
-    }
-    CommentsLogger::log("Failed to move uploaded file to: " . $uploadPath, 'Error');
-    return false;
+if (!in_array($currentPage, $allowedPages)) {
+    $currentPage = 'apps';
 }
 
-// Handle form submissions
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['fetch_pages'])) {
-        $userToken = $_POST['user_token'];
-        $fb = new FacebookAPI($userToken);
-        $availablePages = $fb->get_user_pages();
-        
-        if (empty($availablePages)) {
-            $error = 'No pages found or invalid token. Make sure you have pages_manage_posts and pages_read_engagement permissions.';
-        }
-    } elseif (isset($_POST['add_selected_pages'])) {
-        $selectedPages = $_POST['selected_pages'] ?? [];
-        $pagesData = json_decode($_POST['pages_data'], true);
-        
-        if (empty($selectedPages)) {
-            $error = 'No pages selected';
-        } else {
-            $addedCount = 0;
-            $failedCount = 0;
-            
-            foreach ($selectedPages as $pageId) {
-                if (!isset($pagesData[$pageId])) continue;
-                
-                $pageData = $pagesData[$pageId];
-                $fb = new FacebookAPI($pageData['access_token']);
-                
-                // Subscribe to page feed
-                if ($fb->subscribe_to_feed($pageId)) {
-                    if ($db->addFanPage($pageId, $pageData['access_token'], $pageData['name'], $pageData['avatar'], 0)) {
-                        $addedCount++;
-                    } else {
-                        $failedCount++;
-                    }
-                } else {
-                    $failedCount++;
-                }
-            }
-            
-            if ($addedCount > 0) {
-                $message = "Successfully added $addedCount page(s)";
-            }
-            if ($failedCount > 0) {
-                $error = "Failed to add $failedCount page(s)";
-            }
-        }
-    } elseif (isset($_POST['remove_page'])) {
-        $pageId = $_POST['page_id'];
-        // Get page data to get the access token before removal
-        $pageData = $db->getFanPage($pageId);
-        if ($pageData) {
-            // Initialize Facebook API with page token and unsubscribe from feed
-            $fb = new FacebookAPI($pageData['access_token']);
-            $fb->unsubscribe_from_feed($pageId);
-        }
-        
-        // Now remove from database
-        if ($db->removeFanPage($pageId)) {
-            $message = "Fan page removed successfully!";
-        } else {
-            $error = "Failed to remove fan page.";
-        }
-    } elseif (isset($_POST['update_mode'])) {
-        $pageId = $_POST['page_id'];
-        $deleteMode = isset($_POST['delete_mode']) ? 1 : 0;
-        if ($db->updateFanPageMode($pageId, $deleteMode)) {
-            $message = "Working mode updated successfully!";
-        } else {
-            $error = "Failed to update working mode.";
-        }
-    } elseif (isset($_POST['toggle_cleaner'])) {
-        $pageId = $_POST['page_id'];
-        $cleanerEnabled = isset($_POST['cleaner_enabled']) ? 1 : 0;
-        if ($db->updateCleanerStatus($pageId, $cleanerEnabled)) {
-            $message = "Cleaner status updated successfully!";
-        } else {
-            $error = "Failed to update cleaner status.";
-        }
-    } elseif (isset($_POST['clean_content'])) {
-        $pageId = $_POST['page_id'];
-        $pageData = $db->getFanPage($pageId);
-        if ($pageData) {
-            $fb = new FacebookAPI($pageData['access_token']);
-            $result = $fb->clean_page_content($pageId);
-            
-            if ($result['success']) {
-                $message = $result['message'];
-                if (!empty($result['error_details'])) {
-                    $error = "Some errors occurred: " . implode("; ", $result['error_details']);
-                }
-            } else {
-                $error = $result['message'];
-            }
-        } else {
-            $error = "Page not found.";
-        }
-    } elseif (isset($_POST['action']) && $_POST['action'] === 'add_rule') {
-        $pageId = $_POST['page_id'];
-        $triggerWords = $_POST['trigger_words'];
-        $replyText = $_POST['reply_text'];
-        
-        // Handle image upload
-        $imagePath = null;
-        if (isset($_FILES['reply_image']) && !empty($_FILES['reply_image']['tmp_name'])) {
-            $imagePath = handleImageUpload($_FILES['reply_image']);
-            if ($imagePath === false) {
-                $error = "Invalid image file. Please upload JPG, PNG or GIF.";
-            }
-        }
-        
-        if (empty($error)) {
-            if ($db->addReplyRule($pageId, $triggerWords, $replyText, $imagePath)) {
-                $message = 'Reply rule added successfully';
-            } else {
-                $error = 'Failed to add reply rule';
-            }
-        }
-    } elseif (isset($_POST['action']) && $_POST['action'] === 'remove_rule') {
-        if ($db->removeReplyRule($_POST['rule_id'])) {
-            $message = 'Reply rule removed successfully';
-        } else {
-            $error = 'Failed to remove reply rule';
-        }
-    } elseif (isset($_POST['action']) && $_POST['action'] === 'update_rule') {
-        $ruleId = $_POST['rule_id'];
-        $triggerWords = $_POST['trigger_words'];
-        $replyText = $_POST['reply_text'];
-        
-        // Handle image upload
-        $imagePath = $_POST['current_image']; // Keep existing image if no new one uploaded
-        if (isset($_FILES['reply_image']) && !empty($_FILES['reply_image']['tmp_name'])) {
-            $newImage = handleImageUpload($_FILES['reply_image']);
-            if ($newImage === false) {
-                $error = "Invalid image file. Please upload JPG, PNG or GIF.";
-                CommentsLogger::log("Failed to upload image: " . print_r($_FILES['reply_image'], true), 'Error');
-            } else {
-                // Delete old image if exists
-                if (!empty($imagePath)) {
-                    if (!@unlink(__DIR__ . '/uploads/' . $imagePath)) {
-                        CommentsLogger::log("Failed to delete old image: " . $imagePath, 'Warning');
-                    }
-                }
-                $imagePath = $newImage;
-                CommentsLogger::log("New image path set to: " . $newImage, 'Info');
-            }
-        }
-        
-        if (empty($error)) {
-            $ruleUpdated = $db->updateReplyRule($ruleId, $triggerWords, $replyText, $imagePath);
-            if ($ruleUpdated) {
-                $message = 'Reply rule updated successfully';
-                CommentsLogger::log("Rule $ruleId updated with image: $imagePath", 'Info');
-            } else {
-                $error = 'Failed to update reply rule';
-                CommentsLogger::log("Failed to update rule $ruleId in database", 'Error');
-            }
-        }
-    }
+$pageFile = __DIR__ . '/admin_' . $currentPage . '.php';
+if (!file_exists($pageFile)) {
+    die("Page not found: $pageFile");
 }
 
-// Get current data
-$fanPages = $db->getFanPages();
-$replyRules = [];
-$tokenValidation = [];
-
-// Validate all tokens
-foreach ($fanPages as $page) {
-    $rules = $db->getReplyRules($page['id']);
-    $replyRules = array_merge($replyRules, $rules);
-    
-    // Validate token
-    $fb = new FacebookAPI($page['access_token']);
-    $validation = $fb->validate_token();
-    $tokenValidation[$page['id']] = $validation;
-}
+// Include the page content
+ob_start();
+include $pageFile;
+$pageContent = ob_get_clean();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -230,52 +37,40 @@ foreach ($fanPages as $page) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
-        .form-switch .form-check-input { margin-left: 0; }
-        
-        /* Page Selection Cards */
-        .page-selection-card {
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        .page-selection-card:hover {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
-        .page-selection-card .form-check-input:checked ~ .form-check-label {
-            color: #0d6efd;
+        :root {
+            --sidebar-width: 250px;
+            --sidebar-collapsed-width: 60px;
         }
         
-        /* Sidebar Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        
         .sidebar {
             position: fixed;
             top: 56px;
             left: 0;
             height: calc(100vh - 56px);
-            background: #212529;
-            transition: width 0.3s ease;
+            background: #2c3e50;
+            transition: width 0.3s;
             z-index: 1000;
             overflow-x: hidden;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         }
         
         .sidebar.expanded {
-            width: 250px;
+            width: var(--sidebar-width);
         }
         
         .sidebar.collapsed {
-            width: 60px;
+            width: var(--sidebar-collapsed-width);
         }
         
         .sidebar-toggle {
             padding: 15px;
-            color: #fff;
+            color: white;
             cursor: pointer;
-            border-bottom: 1px solid #343a40;
             text-align: center;
-        }
-        
-        .sidebar-toggle:hover {
-            background: #343a40;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         .sidebar-menu {
@@ -284,57 +79,48 @@ foreach ($fanPages as $page) {
             margin: 0;
         }
         
-        .sidebar-menu li {
-            border-bottom: 1px solid #343a40;
-        }
-        
-        .sidebar-menu a {
+        .sidebar-menu li a {
             display: flex;
             align-items: center;
-            padding: 15px;
-            color: #adb5bd;
+            padding: 15px 20px;
+            color: #ecf0f1;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: background 0.3s;
+        }
+        
+        .sidebar-menu li a:hover {
+            background: #34495e;
+        }
+        
+        .sidebar-menu li a.active {
+            background: #3498db;
+        }
+        
+        .sidebar-menu li a i {
+            font-size: 1.2rem;
+            min-width: 20px;
+        }
+        
+        .sidebar-menu li a span {
+            margin-left: 15px;
             white-space: nowrap;
         }
         
-        .sidebar-menu a:hover {
-            background: #343a40;
-            color: #fff;
+        .sidebar.collapsed .sidebar-menu li a span {
+            display: none;
         }
         
-        .sidebar-menu a.active {
-            background: #0d6efd;
-            color: #fff;
-        }
-        
-        .sidebar-menu i {
-            font-size: 1.2rem;
-            min-width: 30px;
-        }
-        
-        .sidebar-menu span {
-            margin-left: 10px;
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-        
-        .sidebar.collapsed .sidebar-menu span {
-            opacity: 0;
-            width: 0;
-        }
-        
-        /* Main Content */
         .main-content {
-            transition: margin-left 0.3s ease;
+            transition: margin-left 0.3s;
+            padding-top: 56px;
         }
         
         .main-content.expanded {
-            margin-left: 250px;
+            margin-left: var(--sidebar-width);
         }
         
         .main-content.collapsed {
-            margin-left: 60px;
+            margin-left: var(--sidebar-collapsed-width);
         }
         
         .content-section {
@@ -346,11 +132,12 @@ foreach ($fanPages as $page) {
         }
     </style>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">FB Comments Hide'N'Reply</a>
-            <div class="d-flex">
+            <span class="navbar-brand mb-0 h1">FB Comments Hide'N'Reply - Admin Panel</span>
+            <div>
                 <a href="logviewer.php" class="btn btn-info me-2">Log Viewer</a>
                 <a href="logout.php" class="btn btn-outline-light">Logout</a>
             </div>
@@ -364,19 +151,25 @@ foreach ($fanPages as $page) {
         </div>
         <ul class="sidebar-menu">
             <li>
-                <a href="#" class="active" onclick="showSection('pages', this)">
+                <a href="?page=apps" class="<?php echo $currentPage === 'apps' ? 'active' : ''; ?>">
+                    <i class="bi bi-app-indicator"></i>
+                    <span>Apps</span>
+                </a>
+            </li>
+            <li>
+                <a href="?page=pages" class="<?php echo $currentPage === 'pages' ? 'active' : ''; ?>">
                     <i class="bi bi-file-earmark-text"></i>
                     <span>Pages</span>
                 </a>
             </li>
             <li>
-                <a href="#" onclick="showSection('cleaner', this)">
+                <a href="?page=cleaner" class="<?php echo $currentPage === 'cleaner' ? 'active' : ''; ?>">
                     <i class="bi bi-shield-check"></i>
                     <span>Cleaner</span>
                 </a>
             </li>
             <li>
-                <a href="#" onclick="showSection('replies', this)">
+                <a href="?page=replies" class="<?php echo $currentPage === 'replies' ? 'active' : ''; ?>">
                     <i class="bi bi-chat-dots"></i>
                     <span>Replies</span>
                 </a>
@@ -387,395 +180,7 @@ foreach ($fanPages as $page) {
     <!-- Main Content -->
     <div class="main-content expanded" id="mainContent">
         <div class="container my-4">
-        <?php if ($message): ?>
-            <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
-        <?php endif; ?>
-        <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-
-        <!-- Pages Section -->
-        <div id="pagesSection" class="content-section active">
-            <div class="row">
-            <!-- Fan Pages Section -->
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Fan Pages</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- Step 1: Enter User Token -->
-                        <form method="post" class="mb-4">
-                            <div class="mb-3">
-                                <label for="user_token" class="form-label">User Access Token</label>
-                                <input type="text" class="form-control" id="user_token" name="user_token" 
-                                       placeholder="Enter your Facebook user access token" required>
-                                <small class="form-text text-muted">
-                                    Enter your user access token with pages_manage_posts and pages_read_engagement permissions
-                                </small>
-                            </div>
-                            <button type="submit" name="fetch_pages" class="btn btn-primary">
-                                <i class="bi bi-search"></i> Fetch My Pages
-                            </button>
-                        </form>
-
-                        <!-- Step 2: Select Pages -->
-                        <?php if (!empty($availablePages)): ?>
-                        <form method="post" class="mb-4">
-                            <h6 class="mb-3">Select pages to add:</h6>
-                            <input type="hidden" name="pages_data" value="<?php echo htmlspecialchars(json_encode(array_column($availablePages, null, 'id'))); ?>">
-                            
-                            <div class="row">
-                                <?php foreach ($availablePages as $page): ?>
-                                <div class="col-md-6 col-lg-4 mb-3">
-                                    <div class="card page-selection-card h-100">
-                                        <div class="card-body">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="selected_pages[]" 
-                                                       value="<?php echo htmlspecialchars($page['id']); ?>" 
-                                                       id="page_<?php echo htmlspecialchars($page['id']); ?>">
-                                                <label class="form-check-label d-flex align-items-center w-100" 
-                                                       for="page_<?php echo htmlspecialchars($page['id']); ?>" 
-                                                       style="cursor: pointer;">
-                                                    <?php if (!empty($page['avatar'])): ?>
-                                                        <img src="<?php echo htmlspecialchars($page['avatar']); ?>" 
-                                                             alt="" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                                                    <?php endif; ?>
-                                                    <div>
-                                                        <div class="fw-bold"><?php echo htmlspecialchars($page['name']); ?></div>
-                                                        <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                            
-                            <button type="submit" name="add_selected_pages" class="btn btn-success">
-                                <i class="bi bi-plus-circle"></i> Add Selected Pages
-                            </button>
-                        </form>
-                        <?php endif; ?>
-
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="mb-0">Fan Pages</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Page</th>
-                                                <th class="text-center">Access Token</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($fanPages as $page): ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <?php if (!empty($page['page_avatar'])): ?>
-                                                            <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                                        <?php endif; ?>
-                                                        <div>
-            <div><?php echo htmlspecialchars($page['page_name']); ?></div>
-            <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
-        </div>
-    </div>
-</td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center justify-content-center">
-                                                        <span class="me-2"><?php echo htmlspecialchars(substr($page['access_token'], 0, 7) . '...'); ?></span>
-                                                        <button type="button" class="btn btn-sm btn-outline-secondary" 
-                                                                onclick="copyToClipboard('<?php echo htmlspecialchars($page['access_token'], ENT_QUOTES); ?>', this)"
-                                                                title="Copy token to clipboard">
-                                                            <i class="bi bi-clipboard"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php 
-                                                    $validation = $tokenValidation[$page['id']] ?? ['valid' => false, 'error' => 'Unknown'];
-                                                    if ($validation['valid']): 
-                                                        if (isset($validation['expires_at']) && $validation['expires_at']): 
-                                                            $expiryDate = date('Y-m-d H:i', $validation['expires_at']);
-                                                    ?>
-                                                        <span title="Token is valid">✅</span><br>
-                                                        <small class="text-muted">Expires: <?php echo $expiryDate; ?></small>
-                                                    <?php else: ?>
-                                                        <span title="Token is valid (never expires)">✅ Never expires</span>
-                                                    <?php endif; ?>
-                                                    <?php else: ?>
-                                                        <span title="<?php echo htmlspecialchars($validation['error']); ?>">❌ <?php echo htmlspecialchars($validation['error']); ?></span>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <form method="post" class="d-inline">
-                                                        <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
-                                                        <button type="submit" name="remove_page" class="btn btn-danger btn-sm" 
-                                                                onclick="return confirm('Are you sure you want to remove this page?');">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- Cleaner Section -->
-        <div id="cleanerSection" class="content-section">
-            <div class="row">
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Comments Cleaner Configuration</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted">Configure comment processing mode for each page. Comments can be either hidden or permanently deleted.</p>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Page</th>
-                                        <th class="text-center">Cleaner Status</th>
-                                        <th class="text-center">Processing Mode</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($fanPages as $page): ?>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <?php if (!empty($page['page_avatar'])): ?>
-                                                    <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                                <?php endif; ?>
-                                                <div>
-                                                    <div><?php echo htmlspecialchars($page['page_name']); ?></div>
-                                                    <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <form method="post" class="d-inline">
-                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
-                                                <div class="form-check form-switch d-flex justify-content-center">
-                                                    <input class="form-check-input" type="checkbox" name="cleaner_enabled" value="1" 
-                                                           <?php echo $page['cleaner_enabled'] ? 'checked' : ''; ?> 
-                                                           onchange="this.form.submit()">
-                                                    <label class="form-check-label ms-2"><?php echo $page['cleaner_enabled'] ? 'ON' : 'OFF'; ?></label>
-                                                </div>
-                                                <input type="hidden" name="toggle_cleaner" value="1">
-                                            </form>
-                                        </td>
-                                        <td class="text-center">
-                                            <form method="post" class="d-inline">
-                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
-                                                <div class="form-check form-switch d-flex justify-content-center">
-                                                    <input class="form-check-input" type="checkbox" name="delete_mode" value="1" 
-                                                           <?php echo $page['delete_mode'] ? 'checked' : ''; ?> 
-                                                           onchange="this.form.submit()"
-                                                           <?php echo !$page['cleaner_enabled'] ? 'disabled' : ''; ?>>
-                                                    <label class="form-check-label ms-2"><?php echo $page['delete_mode'] ? 'Delete' : 'Hide'; ?></label>
-                                                </div>
-                                                <input type="hidden" name="update_mode" value="1">
-                                            </form>
-                                        </td>
-                                        <td class="text-center">
-                                            <form method="post" class="d-inline">
-                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
-                                                <button type="submit" name="clean_content" class="btn btn-danger btn-sm" 
-                                                        onclick="return confirm('⚠️ WARNING: This will permanently delete ALL posts and photos/videos from this page! This action cannot be undone. Are you absolutely sure?');">
-                                                    <i class="bi bi-trash3"></i> Clean Content
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <!-- Replies Section -->
-        <div id="repliesSection" class="content-section">
-            <div class="row">
-            <!-- Reply Rules Section -->
-            <div class="col-12 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Reply Rules</h5>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" enctype="multipart/form-data" class="mb-4">
-                            <input type="hidden" name="action" value="add_rule">
-                            <div class="mb-3">
-                                <label for="rule_page_id" class="form-label">Page</label>
-                                <select class="form-select" id="rule_page_id" name="page_id" required>
-                                    <?php foreach ($fanPages as $page): ?>
-                                        <option value="<?php echo htmlspecialchars($page['id']); ?>">
-                                            <?php echo htmlspecialchars($page['page_name']); ?> (<?php echo htmlspecialchars($page['id']); ?>)
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="trigger_words" class="form-label">Trigger Words (comma-separated)</label>
-                                <input type="text" class="form-control" id="trigger_words" name="trigger_words" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reply_text" class="form-label">Reply Text</label>
-                                <textarea class="form-control" id="reply_text" name="reply_text" rows="3" required></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reply_image" class="form-label">Reply Image (optional)</label>
-                                <input type="file" class="form-control" id="reply_image" name="reply_image" accept="image/*">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Rule</button>
-                        </form>
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Page</th>
-                                        <th>Triggers</th>
-                                        <th>Reply</th>
-                                        <th>Image</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($replyRules as $rule): ?>
-                                        <tr>
-                                            <td>
-                                                <?php
-                                                $pageId = $rule['page_id'];
-                                                $pageFound = false;
-                                                foreach ($fanPages as $page) {
-                                                    if ($page['id'] === $pageId) {
-                                                        $pageFound = true;
-                                                        ?>
-                                                        <div class="d-flex align-items-center">
-                                                            <?php if (!empty($page['page_avatar'])): ?>
-                                                                <img src="<?php echo htmlspecialchars($page['page_avatar']); ?>" alt="" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                                            <?php endif; ?>
-                <div>
-                    <div><?php echo htmlspecialchars($page['page_name']); ?></div>
-                    <small class="text-muted"><?php echo htmlspecialchars($pageId); ?></small>
-                </div>
-            </div>
-            <?php
-            break;
-        }
-    }
-    if (!$pageFound) {
-        echo htmlspecialchars($pageId);
-    }
-    ?>
-</td>
-                                            <td><?php echo htmlspecialchars(strlen($rule['trigger_words']) > 15 ? substr($rule['trigger_words'], 0, 15) . '...' : $rule['trigger_words']); ?></td>
-                                            <td class="text-truncate" style="max-width: 200px;">
-                                                <?php echo htmlspecialchars(strlen($rule['reply_text']) > 15 ? substr($rule['reply_text'], 0, 15) . '...' : $rule['reply_text']); ?>
-                                            </td>
-                                            <td>
-                                                <?php if (!empty($rule['image_path'])): ?>
-                                                <img src="image.php?file=<?= urlencode($rule['image_path']) ?>" 
-                                                     alt="Reply image" class="img-thumbnail" style="max-height: 50px;">
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm me-1" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#editRule<?php echo $rule['rule_id']; ?>">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <form method="post" class="d-inline">
-                                                    <input type="hidden" name="action" value="remove_rule">
-                                                    <input type="hidden" name="rule_id" value="<?php echo $rule['rule_id']; ?>">
-                                                    <button type="submit" class="btn btn-danger btn-sm" 
-                                                            onclick="return confirm('Are you sure?')">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Edit Rule Modal -->
-                                        <div class="modal fade" id="editRule<?php echo $rule['rule_id']; ?>" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Edit Rule</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <form method="post" enctype="multipart/form-data">
-                                                        <div class="modal-body">
-                                                            <input type="hidden" name="action" value="update_rule">
-                                                            <input type="hidden" name="rule_id" value="<?php echo $rule['rule_id']; ?>">
-                                                            <input type="hidden" name="current_image" value="<?php echo htmlspecialchars($rule['image_path'] ?? ''); ?>">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Page ID</label>
-                                                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($rule['page_id']); ?>" readonly>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="edit_trigger_words" class="form-label">Trigger Words</label>
-                                                                <input type="text" class="form-control" name="trigger_words" 
-                                                                       value="<?php echo htmlspecialchars($rule['trigger_words']); ?>" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="edit_reply_text" class="form-label">Reply Text</label>
-                                                                <textarea class="form-control" name="reply_text" rows="3" required><?php echo htmlspecialchars($rule['reply_text']); ?></textarea>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="edit_reply_image" class="form-label">Reply Image</label>
-                                                                <?php if (!empty($rule['image_path'])): ?>
-                                                                <div class="mb-2">
-                                                                    <img src="image.php?file=<?= urlencode($rule['image_path']) ?>" 
-                                                                         alt="Current image" class="img-thumbnail" style="max-height: 100px;">
-                                                                </div>
-                                                                <?php endif; ?>
-                                                                <input type="file" class="form-control" 
-                                                                       id="edit_reply_image"
-                                                                       name="reply_image" accept="image/*">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
+            <?php echo $pageContent; ?>
         </div>
     </div>
 
@@ -816,34 +221,6 @@ foreach ($fanPages as $page) {
                 mainContent.classList.remove('collapsed');
                 mainContent.classList.add('expanded');
             }
-        }
-        
-        // Show selected section
-        function showSection(sectionName, element) {
-            // Prevent default link behavior
-            event.preventDefault();
-            
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Remove active class from all menu items
-            document.querySelectorAll('.sidebar-menu a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            // Show selected section
-            if (sectionName === 'pages') {
-                document.getElementById('pagesSection').classList.add('active');
-            } else if (sectionName === 'cleaner') {
-                document.getElementById('cleanerSection').classList.add('active');
-            } else if (sectionName === 'replies') {
-                document.getElementById('repliesSection').classList.add('active');
-            }
-            
-            // Add active class to clicked menu item
-            element.classList.add('active');
         }
     </script>
 </body>
