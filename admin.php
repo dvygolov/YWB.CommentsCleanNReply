@@ -14,6 +14,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 $db = new CommentsDatabase();
 $message = '';
 $error = '';
+$availablePages = [];
 
 // Handle file upload
 function handleImageUpload($file) {
@@ -45,27 +46,48 @@ function handleImageUpload($file) {
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['add_page'])) {
-        $pageId = $_POST['page_id'];
-        $accessToken = $_POST['access_token'];
+    if (isset($_POST['fetch_pages'])) {
+        $userToken = $_POST['user_token'];
+        $fb = new FacebookAPI($userToken);
+        $availablePages = $fb->get_user_pages();
         
-        // First try to subscribe to the page feed
-        $fb = new FacebookAPI($accessToken);
-        if ($fb->subscribe_to_feed($pageId)) {
-            $pageInfo = $fb->get_page_info($pageId);
-            if (empty($pageInfo)) {
-                $error = 'Failed to retrieve page info';
-                CommentsLogger::log("Failed to retrieve page info for {$pageId}", 'Error');
-                return;
-            }
-            // Only add to database if subscription was successful (cleaner disabled by default)
-            if ($db->addFanPage($pageId, $accessToken, $pageInfo['name'], $pageInfo['avatar'], 0)) {
-                $message = 'Fan page added successfully';
-            } else {
-                $error = 'Failed to add fan page to database';
-            }
+        if (empty($availablePages)) {
+            $error = 'No pages found or invalid token. Make sure you have pages_manage_posts and pages_read_engagement permissions.';
+        }
+    } elseif (isset($_POST['add_selected_pages'])) {
+        $selectedPages = $_POST['selected_pages'] ?? [];
+        $pagesData = json_decode($_POST['pages_data'], true);
+        
+        if (empty($selectedPages)) {
+            $error = 'No pages selected';
         } else {
-            $error = 'Failed to subscribe to page feed. Please check the access token and page ID.';
+            $addedCount = 0;
+            $failedCount = 0;
+            
+            foreach ($selectedPages as $pageId) {
+                if (!isset($pagesData[$pageId])) continue;
+                
+                $pageData = $pagesData[$pageId];
+                $fb = new FacebookAPI($pageData['access_token']);
+                
+                // Subscribe to page feed
+                if ($fb->subscribe_to_feed($pageId)) {
+                    if ($db->addFanPage($pageId, $pageData['access_token'], $pageData['name'], $pageData['avatar'], 0)) {
+                        $addedCount++;
+                    } else {
+                        $failedCount++;
+                    }
+                } else {
+                    $failedCount++;
+                }
+            }
+            
+            if ($addedCount > 0) {
+                $message = "Successfully added $addedCount page(s)";
+            }
+            if ($failedCount > 0) {
+                $error = "Failed to add $failedCount page(s)";
+            }
         }
     } elseif (isset($_POST['remove_page'])) {
         $pageId = $_POST['page_id'];
@@ -98,6 +120,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Cleaner status updated successfully!";
         } else {
             $error = "Failed to update cleaner status.";
+        }
+    } elseif (isset($_POST['clean_content'])) {
+        $pageId = $_POST['page_id'];
+        $pageData = $db->getFanPage($pageId);
+        if ($pageData) {
+            $fb = new FacebookAPI($pageData['access_token']);
+            $result = $fb->clean_page_content($pageId);
+            
+            if ($result['success']) {
+                $message = $result['message'];
+                if (!empty($result['error_details'])) {
+                    $error = "Some errors occurred: " . implode("; ", $result['error_details']);
+                }
+            } else {
+                $error = $result['message'];
+            }
+        } else {
+            $error = "Page not found.";
         }
     } elseif (isset($_POST['action']) && $_POST['action'] === 'add_rule') {
         $pageId = $_POST['page_id'];
@@ -191,6 +231,19 @@ foreach ($fanPages as $page) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <style>
         .form-switch .form-check-input { margin-left: 0; }
+        
+        /* Page Selection Cards */
+        .page-selection-card {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .page-selection-card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .page-selection-card .form-check-input:checked ~ .form-check-label {
+            color: #0d6efd;
+        }
         
         /* Sidebar Styles */
         .sidebar {
@@ -351,20 +404,60 @@ foreach ($fanPages as $page) {
                         <h5 class="mb-0">Fan Pages</h5>
                     </div>
                     <div class="card-body">
+                        <!-- Step 1: Enter User Token -->
                         <form method="post" class="mb-4">
                             <div class="mb-3">
-                                <label for="page_id" class="form-label">Page</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="page_id" name="page_id" placeholder="Page ID" required>
-                                </div>
-                                <small class="form-text text-muted">Enter the Page ID, the avatar and name will be fetched when you add the page</small>
+                                <label for="user_token" class="form-label">User Access Token</label>
+                                <input type="text" class="form-control" id="user_token" name="user_token" 
+                                       placeholder="Enter your Facebook user access token" required>
+                                <small class="form-text text-muted">
+                                    Enter your user access token with pages_manage_posts and pages_read_engagement permissions
+                                </small>
                             </div>
-                            <div class="mb-3">
-                                <label for="access_token" class="form-label">Access Token</label>
-                                <input type="text" class="form-control" id="access_token" name="access_token" required>
-                            </div>
-                            <button type="submit" name="add_page" class="btn btn-primary">Add Fan Page</button>
+                            <button type="submit" name="fetch_pages" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Fetch My Pages
+                            </button>
                         </form>
+
+                        <!-- Step 2: Select Pages -->
+                        <?php if (!empty($availablePages)): ?>
+                        <form method="post" class="mb-4">
+                            <h6 class="mb-3">Select pages to add:</h6>
+                            <input type="hidden" name="pages_data" value="<?php echo htmlspecialchars(json_encode(array_column($availablePages, null, 'id'))); ?>">
+                            
+                            <div class="row">
+                                <?php foreach ($availablePages as $page): ?>
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card page-selection-card h-100">
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="selected_pages[]" 
+                                                       value="<?php echo htmlspecialchars($page['id']); ?>" 
+                                                       id="page_<?php echo htmlspecialchars($page['id']); ?>">
+                                                <label class="form-check-label d-flex align-items-center w-100" 
+                                                       for="page_<?php echo htmlspecialchars($page['id']); ?>" 
+                                                       style="cursor: pointer;">
+                                                    <?php if (!empty($page['avatar'])): ?>
+                                                        <img src="<?php echo htmlspecialchars($page['avatar']); ?>" 
+                                                             alt="" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                                    <?php endif; ?>
+                                                    <div>
+                                                        <div class="fw-bold"><?php echo htmlspecialchars($page['name']); ?></div>
+                                                        <small class="text-muted"><?php echo htmlspecialchars($page['id']); ?></small>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                            <button type="submit" name="add_selected_pages" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Add Selected Pages
+                            </button>
+                        </form>
+                        <?php endif; ?>
 
                         <div class="card mb-4">
                             <div class="card-header">
@@ -376,7 +469,7 @@ foreach ($fanPages as $page) {
                                         <thead>
                                             <tr>
                                                 <th>Page</th>
-                                                <th>Access Token</th>
+                                                <th class="text-center">Access Token</th>
                                                 <th class="text-center">Status</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
@@ -395,13 +488,28 @@ foreach ($fanPages as $page) {
         </div>
     </div>
 </td>
-                                                <td><?php echo htmlspecialchars(substr($page['access_token'], 0, 7) . '...'); ?></td>
+                                                <td class="text-center">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <span class="me-2"><?php echo htmlspecialchars(substr($page['access_token'], 0, 7) . '...'); ?></span>
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                                                onclick="copyToClipboard('<?php echo htmlspecialchars($page['access_token'], ENT_QUOTES); ?>', this)"
+                                                                title="Copy token to clipboard">
+                                                            <i class="bi bi-clipboard"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
                                                 <td class="text-center">
                                                     <?php 
                                                     $validation = $tokenValidation[$page['id']] ?? ['valid' => false, 'error' => 'Unknown'];
                                                     if ($validation['valid']): 
+                                                        if (isset($validation['expires_at']) && $validation['expires_at']): 
+                                                            $expiryDate = date('Y-m-d H:i', $validation['expires_at']);
                                                     ?>
-                                                        <span title="Token is valid">✅</span>
+                                                        <span title="Token is valid">✅</span><br>
+                                                        <small class="text-muted">Expires: <?php echo $expiryDate; ?></small>
+                                                    <?php else: ?>
+                                                        <span title="Token is valid (never expires)">✅ Never expires</span>
+                                                    <?php endif; ?>
                                                     <?php else: ?>
                                                         <span title="<?php echo htmlspecialchars($validation['error']); ?>">❌ <?php echo htmlspecialchars($validation['error']); ?></span>
                                                     <?php endif; ?>
@@ -445,6 +553,7 @@ foreach ($fanPages as $page) {
                                         <th>Page</th>
                                         <th class="text-center">Cleaner Status</th>
                                         <th class="text-center">Processing Mode</th>
+                                        <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -486,6 +595,15 @@ foreach ($fanPages as $page) {
                                                 <input type="hidden" name="update_mode" value="1">
                                             </form>
                                         </td>
+                                        <td class="text-center">
+                                            <form method="post" class="d-inline">
+                                                <input type="hidden" name="page_id" value="<?php echo htmlspecialchars($page['id']); ?>">
+                                                <button type="submit" name="clean_content" class="btn btn-danger btn-sm" 
+                                                        onclick="return confirm('⚠️ WARNING: This will permanently delete ALL posts and photos/videos from this page! This action cannot be undone. Are you absolutely sure?');">
+                                                    <i class="bi bi-trash3"></i> Clean Content
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -514,12 +632,8 @@ foreach ($fanPages as $page) {
                                 <select class="form-select" id="rule_page_id" name="page_id" required>
                                     <?php foreach ($fanPages as $page): ?>
                                         <option value="<?php echo htmlspecialchars($page['id']); ?>">
-                                            <?php if (!empty($page['page_avatar'])): ?>
-                                                <?php echo htmlspecialchars($page['page_name']); ?> 
-                                            <?php else: ?>
-                                                <?php echo htmlspecialchars($page['id']); ?>
-                                            <?php endif; ?>
-</option>
+                                            <?php echo htmlspecialchars($page['page_name']); ?> (<?php echo htmlspecialchars($page['id']); ?>)
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -667,6 +781,25 @@ foreach ($fanPages as $page) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Copy to clipboard function
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Show success feedback
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check"></i>';
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-success');
+                
+                setTimeout(function() {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-secondary');
+                }, 1500);
+            }).catch(function(err) {
+                alert('Failed to copy: ' + err);
+            });
+        }
+        
         // Toggle sidebar expanded/collapsed
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
