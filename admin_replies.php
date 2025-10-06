@@ -28,7 +28,14 @@ function handleImageUpload($file) {
 
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     $filename = uniqid() . '.' . $ext;
-    $uploadPath = __DIR__ . '/uploads/' . $filename;
+    
+    $uploadsDir = __DIR__ . '/uploads';
+
+    if (!file_exists($uploadsDir) || !is_dir($uploadsDir)) {
+        mkdir($uploadsDir, 0777, true);
+    }
+
+    $uploadPath = $uploadsDir . '/' . $filename;
 
     if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
         CommentsLogger::log("File successfully uploaded to: " . $uploadPath, 'Info');
