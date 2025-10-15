@@ -53,7 +53,7 @@ class FacebookAPI {
     }
 
     public function get_user_pages(): array {
-        $url = 'me/accounts?fields=id,name,access_token,picture.type(large)';
+        $url = 'me/accounts?fields=id,name,access_token,picture.type(large)&summary=total_count&limit=300';
         $response = $this->make_curl_request($url, null, false, 'GET');
         
         if (isset($response['error'])) {
