@@ -27,9 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $appId = $appInfo['id'];
             $appName = $appInfo['name'] ?? 'Unknown App';
             
-            // Get current domain for callback URL
-            $domain = $_SERVER['HTTP_HOST'];
-            $callbackUrl = 'https://' . $domain . '/index.php';
+            // Construct full callback URL including subdirectory path
+            $host = $_SERVER['HTTP_HOST'];
+            $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+            $callbackUrl = 'https://' . $host . $scriptPath . '/index.php';
             
             // Subscribe app
             if ($fb->subscribe_app($appId, $callbackUrl)) {
@@ -191,8 +192,10 @@ foreach ($apps as $app) {
                 <div class="alert alert-info mt-3">
                     <i class="bi bi-info-circle"></i> <strong>Webhook URL:</strong> 
                     <?php 
-                    $domain = $_SERVER['HTTP_HOST'];
-                    echo 'https://' . $domain . '/index.php';
+                    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+                    $host = $_SERVER['HTTP_HOST'];
+                    $scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+                    echo $protocol . '://' . $host . $scriptPath . '/index.php';
                     ?>
                 </div>
             </div>
