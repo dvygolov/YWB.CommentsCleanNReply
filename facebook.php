@@ -115,7 +115,7 @@ class FacebookAPI {
         
         // Handle image attachment if provided
         if (!is_null($image_path) && !empty($image_path)) {
-            $fullPath = __DIR__ . '/images/' . $image_path;
+            $fullPath = __DIR__ . '/uploads/' . $image_path;
             if (file_exists($fullPath)) {
                 // Upload the photo first
                 $photoUrl = 'me/photos';
