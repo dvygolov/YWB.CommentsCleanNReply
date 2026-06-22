@@ -1,4 +1,6 @@
-﻿```
+`$([Environment]::NewLine)
+[Support this project](https://yellowweb.top/donate)
+
                    Instant FB Comments Clean'N'Reply
     _            __     __  _ _             __          __  _     
    | |           \ \   / / | | |            \ \        / / | |    
@@ -9,9 +11,8 @@
            __/ |                                                  
           |___/             https://yellowweb.top                 
 
-If you like this script, PLEASE DONATE!  
-USDT TRC20: TKeNEVndhPSKXuYmpEwF4fVtWUvfCnWmra
-Bitcoin: bc1qqv99jasckntqnk0pkjnrjtpwu0yurm0qd0gnqv  
-Ethereum: 0xBC118D3FDE78eE393A154C29A4545c575506ad6B  
-```
+If you like this script, PLEASE DONATE!
+`$([Environment]::NewLine)
+[Support this project](https://yellowweb.top/donate)
+
 [All the info about this script is written here](https://yellowweb.top/yourowninstantcommentscleaner/) in russian only, sorry :-)
